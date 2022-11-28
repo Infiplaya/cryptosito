@@ -1,0 +1,58 @@
+import type { NextPage } from "next";
+import Head from "next/head";
+import { trpc } from "../../../utils/trpc";
+import { useRouter } from "next/router";
+import Header from "../../../components/Header/Header";
+import Loader from "../../../components/Other/Loader";
+import { CoinDescription } from "../../../components/Other/CoinDescription";
+import { CoinInfo } from "../../../components/Other/CoinInfo";
+import { Sparklines, SparklinesLine } from "react-sparklines";
+
+const Coin: NextPage = () => {
+  const router = useRouter();
+  const id = router.query["id"];
+  const { data: getCoin } = trpc.coin.getCoin.useQuery({ name: id });
+
+  if (!getCoin)
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loader />
+      </div>
+    );
+
+  return (
+    <>
+      <Head>
+        <title>{getCoin.name}</title>
+        <meta name="description" content="some coinmarket clone" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Header />
+      <main className="dark:bg container mx-auto p-10 lg:px-16">
+        <div>
+          <CoinInfo getCoin={getCoin} />
+          {getCoin.market_data?.sparkline_7d ? (
+            <div className="md:w-1/2 mt-20">
+              <h3 className="text-2xl font-bold mb-10">{getCoin.name} to USD chart</h3>
+              <Sparklines data={getCoin.market_data.sparkline_7d.price}>
+                <SparklinesLine
+                  color={
+                    getCoin.market_data.price_change_percentage_24h > 0
+                      ? "teal"
+                      : "red"
+                  }
+                ></SparklinesLine>
+              </Sparklines>
+            </div>
+          ) : null}
+          <CoinDescription
+            name={getCoin.name}
+            description={getCoin.description}
+          />
+        </div>
+      </main>
+    </>
+  );
+};
+
+export default Coin;
