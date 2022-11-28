@@ -75,6 +75,8 @@ model Coin {
   price_change_percentage_7d  Float?
   price_change_percentage_14d Float?
   total_volume                Float?
+  
+  @@unique([userId, name])
 }
 
 model BuyCoin {
