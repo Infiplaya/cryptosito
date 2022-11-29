@@ -18,6 +18,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Cryptosito</title>
         <meta name="description" content="some coinmarket clone" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
@@ -28,7 +29,7 @@ const Home: NextPage = () => {
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
         {enabled ? <Trending /> : null}
-        {cryptoData && <FilterableCryptoTable cryptoData={cryptoData} />}
+        {cryptoData ? <FilterableCryptoTable cryptoData={cryptoData} /> : null}
       </main>
     </>
   );

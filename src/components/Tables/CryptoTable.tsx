@@ -16,6 +16,7 @@ import { Sparklines, SparklinesLine } from "react-sparklines";
 
 interface Props {
   cryptoData: CryptoData[];
+  coin: any;
 }
 
 export type CryptoData = {
@@ -195,7 +196,6 @@ export function CryptoTable({ cryptoData }: Props): JSX.Element {
             </tr>
           ))}
         </thead>
-
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr
@@ -203,7 +203,11 @@ export function CryptoTable({ cryptoData }: Props): JSX.Element {
               className={`border-b border-gray-200 dark:border-gray-800 dark:hover:bg-blue-900/10`}
             >
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="whitespace-nowrap px-6 py-4">
+                <td
+                  key={cell.id}
+                  className="whitespace-nowrap px-6 py-4"
+                  title="Click on the coin name to go to it's detail page"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

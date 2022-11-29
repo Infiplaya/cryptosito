@@ -15,7 +15,8 @@ type FormValues = {
 };
 
 export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState<string>("");
+  const [success, setSuccess] = useState("");
 
   const schema = yup.object().shape({
     quantity: yup
@@ -65,15 +66,18 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
     onSettled: () => {
       utils.buyCoin.getAll.invalidate();
     },
+
+    onSuccess: () => {
+      setSuccess("You bought a coin!");
+    },
   });
 
   async function onSubmit(data: any) {
-    console.log(data);
     buyCoin.mutate({
       name: getCoin.name,
       userId: session?.user?.id,
       price: getCoin.market_data?.current_price.usd,
-      shares: value,
+      shares: parseFloat(value),
     });
   }
 
@@ -210,14 +214,13 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
             <h1 className="text-3xl font-bold">Buy a coin</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
               <input
-                type={`number`}
-                step={0.1}
                 className="mt-1 rounded-lg p-3"
                 value={value}
                 {...register("quantity")}
                 onChange={(e) => {
-                  setValue(parseFloat(e.target.value));
+                  setValue(e.target.value);
                 }}
+                placeholder="Provide quantity (number)"
               />
               {errors?.quantity && (
                 <p className="mt-2 font-medium text-red-500 drop-shadow transition ease-in dark:drop-shadow-none">
@@ -226,19 +229,17 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
               )}
               <p className="mt-3">
                 Estimated Cost:{" "}
-                {getCoin.market_data?.current_price &&
-                  value * getCoin.market_data?.current_price.usd}
+                {value != ""
+                  ? getCoin.market_data?.current_price &&
+                    parseFloat(value) * getCoin.market_data?.current_price.usd
+                  : ""}
                 $
               </p>
               <button className="mt-3 rounded-lg bg-blue-600 px-3 py-2 text-slate-50">
                 Submit
               </button>
-              {isSubmitted && (
-                <p className="mt-2 font-medium text-green-500 drop-shadow transition ease-in">
-                  You have bought {getCoin.name}!
-                </p>
-              )}
             </form>
+            {success && <p className="text-green-500 mt-3">{success}</p>}
           </>
         ) : (
           <h1 className="mt-10 text-3xl font-bold">

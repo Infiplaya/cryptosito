@@ -79,7 +79,6 @@ export const coinRouter = router({
       const coin = await fetch(`https://api.coingecko.com/api/v3/coins/${input.name}?sparkline=true`).then(res =>
       res.json());
       const parsedData = coinResult.parse(coin)
-      console.log(parsedData)
       return parsedData   
     })
 })

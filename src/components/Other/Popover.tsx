@@ -46,6 +46,9 @@ export default function Example() {
                     <span className="block text-sm">
                       <Link href={`/watchlist`}>Watchlist</Link>
                     </span>
+                    <span className="block text-sm">
+                      <Link href={`/portfolio`}>Portfolio</Link>
+                    </span>
                     <button className="rounded-lg bg-blue-700 px-3 py-1 text-slate-200  dark:bg-blue-500 dark:text-slate-900">
                       Sign out
                     </button>
