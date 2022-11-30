@@ -16,7 +16,6 @@ import { Sparklines, SparklinesLine } from "react-sparklines";
 
 interface Props {
   cryptoData: CryptoData[];
-  coin: any;
 }
 
 export type CryptoData = {
