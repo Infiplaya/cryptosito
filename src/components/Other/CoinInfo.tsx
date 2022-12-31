@@ -239,7 +239,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
                 Submit
               </button>
             </form>
-            {success && <p className="text-green-500 mt-3">{success}</p>}
+            {success && <p className="mt-3 text-green-500">{success}</p>}
           </>
         ) : (
           <h1 className="mt-10 text-3xl font-bold">
