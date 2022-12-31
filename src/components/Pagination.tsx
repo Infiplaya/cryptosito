@@ -1,5 +1,5 @@
 import type { Table } from "@tanstack/react-table";
-import type { CryptoData } from "../Tables/CryptoTable";
+import type { CryptoData } from "./Tables/CryptoTable";
 
 export const Pagination: React.FC<{ table: Table<CryptoData> }> = ({
   table,

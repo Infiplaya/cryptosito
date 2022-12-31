@@ -2,8 +2,8 @@ import { useSession, signIn } from "next-auth/react";
 import Image from "next/future/image";
 import Link from "next/link";
 import { useState } from "react";
-import { RouterOutput } from "../../server/trpc/router";
-import { trpc } from "../../utils/trpc";
+import { RouterOutput } from "../server/trpc/router";
+import { trpc } from "../utils/trpc";
 import Loader from "./Loader";
 type GetCoinOutput = RouterOutput["coin"]["getCoin"];
 import { useForm } from "react-hook-form";
@@ -184,28 +184,28 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
         <p className="mt-5">
           Market Cap:{" "}
           <span>
-            {getCoin.market_data?.market_cap.usd &&
-              dollar.format(getCoin.market_data.market_cap.usd)}
+            {getCoin.market_data?.market_cap.usd ?
+              dollar.format(getCoin.market_data.market_cap.usd) : "No data"}
           </span>
         </p>
         <p>
           Fully Diluted Market Cap:{" "}
           <span>
-            {getCoin.market_data?.fully_diluted_valuation.usd &&
-              dollar.format(getCoin.market_data.fully_diluted_valuation.usd)}
+            {getCoin.market_data?.fully_diluted_valuation.usd ?
+              dollar.format(getCoin.market_data.fully_diluted_valuation.usd) : "No data"}
           </span>
         </p>
         <p>
           Volume 24h:{" "}
           <span>
-            {getCoin.market_data?.high_24h.usd &&
-              dollar.format(getCoin.market_data.high_24h.usd)}
+            {getCoin.market_data?.high_24h.usd ?
+              dollar.format(getCoin.market_data.high_24h.usd) : "No data"}
           </span>
         </p>
         Circulating supply:{" "}
         <span>
-          {getCoin.market_data?.circulating_supply &&
-            dollar.format(getCoin.market_data.circulating_supply)}
+          {getCoin.market_data?.circulating_supply ?
+            dollar.format(getCoin.market_data.circulating_supply) : "No data"}
         </span>
       </div>
       <div>
