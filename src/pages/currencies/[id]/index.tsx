@@ -3,9 +3,9 @@ import Head from "next/head";
 import { trpc } from "../../../utils/trpc";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header/Header";
-import Loader from "../../../components/Other/Loader";
-import { CoinDescription } from "../../../components/Other/CoinDescription";
-import { CoinInfo } from "../../../components/Other/CoinInfo";
+import Loader from "../../../components/Loader";
+import { CoinDescription } from "../../../components/CoinDescription";
+import { CoinInfo } from "../../../components/CoinInfo";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 const Coin: NextPage = () => {

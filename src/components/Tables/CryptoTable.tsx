@@ -10,7 +10,7 @@ import {
 } from "@tanstack/react-table";
 
 import Link from "next/link";
-import { Pagination } from "../Other/Pagination";
+import { Pagination } from "../Pagination";
 
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
