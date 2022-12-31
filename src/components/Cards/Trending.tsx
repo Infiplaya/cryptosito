@@ -25,8 +25,12 @@ const Trending = ({}) => {
 
   return (
     <div className="container mx-auto mt-10 hidden gap-5 md:flex lg:h-48">
-      {coins ? <TrendingCard coins={coins} /> : null}
-      {recentCoins ? <RecentCard recentCoins={recentCoins} /> : null}
+      {coins ? <TrendingCard coins={coins} /> : <div>Loading...</div>}
+      {recentCoins ? (
+        <RecentCard recentCoins={recentCoins} />
+      ) : (
+        <div>Loading../</div>
+      )}
       <SlidingCards />
     </div>
   );

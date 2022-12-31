@@ -4,7 +4,7 @@ import Image from "next/future/image";
 import { Fragment } from "react";
 import Link from "next/link";
 
-export default function Example() {
+export default function PopoverComponent() {
   const { data: session } = useSession();
 
   return (

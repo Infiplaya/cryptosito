@@ -5,7 +5,7 @@ import { useSession, signIn } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "next-themes";
-import Example from "../Popover";
+import PopoverComponent from "../Popover";
 
 export const Navbar = () => {
   const { data: session } = useSession();
@@ -61,7 +61,7 @@ export const Navbar = () => {
       </li>
       <li className="ml-auto md:hidden">
         {session ? (
-          <Example />
+          <PopoverComponent />
         ) : (
           <button onClick={() => signIn()}>Sign In</button>
         )}
