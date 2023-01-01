@@ -24,19 +24,25 @@ export default function FilterableCryptoTable({ cryptoData }: Props) {
     <div className="w-full items-center overflow-x-auto">
       <FilterOptionsBar />
       <CryptoTable cryptoData={currentCoins} />
-      <div className="flex w-full justify-between">
+      <div className="mt-5 flex w-full">
         <Pagination
           totalCoins={cryptoData.length}
           coinsPerPage={coinsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />
-        <div className="p-2">
-          <p>Show rows:</p>
+        <div className="mr-5 mt-5">
+          <label
+            htmlFor="rows"
+            className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Select rows
+          </label>
           <select
+            id="rows"
             onChange={handleCoinsPerPageChange}
             value={coinsPerPage}
-            className="w-36 rounded-lg p-2"
+            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           >
             <option value={10}>10</option>
             <option value={20}>20</option>

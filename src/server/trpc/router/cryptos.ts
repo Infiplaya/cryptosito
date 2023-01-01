@@ -2,7 +2,7 @@ import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { z } from 'zod';
 
 
-const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
+const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
 
 const cryptosResult = z.array(z.object({
   market_cap_rank: z.number(),
@@ -11,9 +11,9 @@ const cryptosResult = z.array(z.object({
   image: z.string(),
   id: z.string(),
   current_price: z.number(),
-  price_change_percentage_1h_in_currency: z.number(),
+  price_change_percentage_1h_in_currency: z.number().nullable(),
   price_change_percentage_24h: z.number(),
-  price_change_percentage_7d_in_currency: z.number(),
+  price_change_percentage_7d_in_currency: z.number().nullable(),
   market_cap: z.number(),
   total_volume: z.number(),
   circulating_supply: z.number(),
@@ -29,6 +29,7 @@ export const cryptosRouter = router({
     .query(async () => {
       const cryptos = await fetch(url).then(res =>
       res.json());
+      console.log(cryptos)
       const parsedData = cryptosResult.parse(cryptos);
       return parsedData
     }),

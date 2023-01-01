@@ -25,7 +25,7 @@ function sortData({
   if (!sortKey) return tableData;
 
   const sortedData = tableData.sort((a, b) => {
-    return a[sortKey] > b[sortKey] ? 1 : -1;
+    return a[sortKey]! > b[sortKey]! ? 1 : -1;
   });
 
   if (reverse) {

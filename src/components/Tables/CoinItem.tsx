@@ -16,9 +16,9 @@ const coinSchema = z.object({
   image: z.string(),
   id: z.string(),
   current_price: z.number(),
-  price_change_percentage_1h_in_currency: z.number(),
+  price_change_percentage_1h_in_currency: z.number().nullable(),
   price_change_percentage_24h: z.number(),
-  price_change_percentage_7d_in_currency: z.number(),
+  price_change_percentage_7d_in_currency: z.number().nullable(),
   market_cap: z.number(),
   total_volume: z.number(),
   circulating_supply: z.number(),
@@ -95,12 +95,12 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="py-4 px-6">${coin.current_price.toLocaleString()}</td>
       <td
         className={`${
-          coin.price_change_percentage_1h_in_currency > 0
+          coin.price_change_percentage_1h_in_currency! > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_1h_in_currency.toFixed(2)}%
+        {coin.price_change_percentage_1h_in_currency!.toFixed(2)}%
       </td>
       <td
         className={`${
@@ -113,12 +113,12 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       </td>
       <td
         className={`${
-          coin.price_change_percentage_7d_in_currency > 0
+          coin.price_change_percentage_7d_in_currency! > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_7d_in_currency.toFixed(2)}%
+        {coin.price_change_percentage_7d_in_currency!.toFixed(2)}%
       </td>
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.total_volume.toLocaleString()}
@@ -126,7 +126,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.market_cap.toLocaleString()}
       </td>
-      <td className="w-52 py-4 px-6">
+      <td className="hidden w-52 py-4 px-6 md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine
             color={coin.price_change_percentage_24h > 0 ? "teal" : "red"}

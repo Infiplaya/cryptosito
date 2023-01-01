@@ -32,7 +32,7 @@ const Pagination = ({
   };
 
   return (
-    <nav>
+    <nav className="flex w-full justify-center">
       <ul className="mt-5 flex gap-2">
         <li>
           <button
@@ -52,8 +52,11 @@ const Pagination = ({
             {"<"}
           </button>
         </li>
-        <li className="rounded-lg p-2">
+        <li className="rounded-lg p-2 hidden md:list-item">
           Page {currentPage} of {totalPages}
+        </li>
+        <li className="text-sm md:hidden mt-3">
+          {currentPage} / {totalPages}
         </li>
         <li>
           <button

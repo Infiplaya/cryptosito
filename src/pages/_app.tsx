@@ -7,6 +7,7 @@ import { trpc } from "../utils/trpc";
 import { ThemeProvider } from "next-themes";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { Footer } from "../components/Footer";
 config.autoAddCss = false;
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -17,6 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </SessionProvider>
   );
