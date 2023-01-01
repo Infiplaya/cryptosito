@@ -1,6 +1,6 @@
 import Navbar from "../components/Header/Header";
 import { useSession, signIn } from "next-auth/react";
-import Image from "next/future/image";
+import Image from "next/image";
 
 const Profile = () => {
   const { data: session } = useSession();
