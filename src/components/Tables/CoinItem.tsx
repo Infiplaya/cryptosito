@@ -4,7 +4,7 @@ import { faStar as outlineStar } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { z } from "zod";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
@@ -13,10 +13,12 @@ const coinSchema = z.object({
   market_cap_rank: z.number(),
   name: z.string(),
   symbol: z.string(),
-  id: z.string(),
   image: z.string(),
+  id: z.string(),
   current_price: z.number(),
+  price_change_percentage_1h_in_currency: z.number(),
   price_change_percentage_24h: z.number(),
+  price_change_percentage_7d_in_currency: z.number(),
   market_cap: z.number(),
   total_volume: z.number(),
   circulating_supply: z.number(),
@@ -29,16 +31,21 @@ type Coin = z.infer<typeof coinSchema>;
 
 export const CoinItem = ({ coin }: { coin: Coin }) => {
   const [savedCoin, setSavedCoin] = useState(false);
-
   const { data: coins } = trpc.watchlist.getAll.useQuery();
 
-  useEffect(() => {
-    coins?.map((watchlistCoin) => {
-      if (coin.name === watchlistCoin.name) {
+  const coinCount = useCallback(() => {
+    coins?.map((watchCoin) => {
+      console.log(watchCoin.name);
+      console.log(coin.name);
+      if (watchCoin.name === coin.name) {
         setSavedCoin(true);
       }
     });
-  }, []);
+  }, [coin.name, coins]);
+
+  useEffect(() => {
+    coinCount();
+  }, [coinCount]);
 
   const utils = trpc.useContext();
   const { data: session } = useSession();
@@ -54,13 +61,13 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
     },
     onSettled: () => {
       utils.watchlist.getAll.invalidate();
-      setSavedCoin(true);
     },
   });
 
   const handleAddCoin = async () => {
     session &&
       addCoin.mutate({
+        id: coin.id,
         name: coin.name,
         rank: coin.market_cap_rank as number,
         userId: session.user?.id,
@@ -68,6 +75,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
         price_change_percentage_24h: coin.price_change_percentage_24h,
         total_volume: coin.total_volume,
       });
+    setSavedCoin(true);
   };
 
   const deleteCoin = trpc.watchlist.deleteFromWatchlist.useMutation({
@@ -81,7 +89,6 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
     },
     onSettled: () => {
       utils.watchlist.getAll.invalidate();
-      setSavedCoin(false);
     },
   });
 
@@ -89,7 +96,10 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
     deleteCoin.mutate({
       id: coin.id,
     });
+    setSavedCoin(false);
   };
+
+  console.log(coin.id);
 
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -123,6 +133,15 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="py-4 px-6">${coin.current_price.toLocaleString()}</td>
       <td
         className={`${
+          coin.price_change_percentage_1h_in_currency > 0
+            ? "text-green-500"
+            : "text-red-500"
+        } py-4 px-6`}
+      >
+        {coin.price_change_percentage_1h_in_currency.toFixed(2)}%
+      </td>
+      <td
+        className={`${
           coin.price_change_percentage_24h > 0
             ? "text-green-500"
             : "text-red-500"
@@ -130,13 +149,22 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       >
         {coin.price_change_percentage_24h.toFixed(2)}%
       </td>
+      <td
+        className={`${
+          coin.price_change_percentage_7d_in_currency > 0
+            ? "text-green-500"
+            : "text-red-500"
+        } py-4 px-6`}
+      >
+        {coin.price_change_percentage_7d_in_currency.toFixed(2)}%
+      </td>
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.total_volume.toLocaleString()}
       </td>
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.market_cap.toLocaleString()}
       </td>
-      <td>
+      <td className="w-52 py-4 px-6">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine
             color={coin.price_change_percentage_24h > 0 ? "teal" : "red"}

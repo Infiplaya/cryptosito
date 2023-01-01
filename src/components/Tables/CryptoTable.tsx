@@ -74,7 +74,9 @@ export function CryptoTable({
     { key: "market_cap_rank", label: "#" },
     { key: "name", label: "Coin" },
     { key: "current_price", label: "Price" },
+    { key: "price_change_percentage_1h_in_currency", label: "1h %" },
     { key: "price_change_percentage_24h", label: "24h %" },
+    { key: "price_change_percentage_7d_in_currency", label: "7d %" },
     { key: "total_volume", label: "Volume 24h" },
     { key: "market_cap", label: "Market Cap" },
   ];

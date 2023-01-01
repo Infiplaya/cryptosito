@@ -128,6 +128,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
               className="mt-3 rounded-lg bg-blue-600 px-3 py-2  text-slate-50"
               onClick={async () => {
                 addCoin.mutate({
+                  id: getCoin.id,
                   name: getCoin.name,
                   rank: getCoin.market_cap_rank as number,
                   userId: session.user?.id,
@@ -184,28 +185,32 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
         <p className="mt-5">
           Market Cap:{" "}
           <span>
-            {getCoin.market_data?.market_cap.usd ?
-              dollar.format(getCoin.market_data.market_cap.usd) : "No data"}
+            {getCoin.market_data?.market_cap.usd
+              ? dollar.format(getCoin.market_data.market_cap.usd)
+              : "No data"}
           </span>
         </p>
         <p>
           Fully Diluted Market Cap:{" "}
           <span>
-            {getCoin.market_data?.fully_diluted_valuation.usd ?
-              dollar.format(getCoin.market_data.fully_diluted_valuation.usd) : "No data"}
+            {getCoin.market_data?.fully_diluted_valuation.usd
+              ? dollar.format(getCoin.market_data.fully_diluted_valuation.usd)
+              : "No data"}
           </span>
         </p>
         <p>
           Volume 24h:{" "}
           <span>
-            {getCoin.market_data?.high_24h.usd ?
-              dollar.format(getCoin.market_data.high_24h.usd) : "No data"}
+            {getCoin.market_data?.high_24h.usd
+              ? dollar.format(getCoin.market_data.high_24h.usd)
+              : "No data"}
           </span>
         </p>
         Circulating supply:{" "}
         <span>
-          {getCoin.market_data?.circulating_supply ?
-            dollar.format(getCoin.market_data.circulating_supply) : "No data"}
+          {getCoin.market_data?.circulating_supply
+            ? dollar.format(getCoin.market_data.circulating_supply)
+            : "No data"}
         </span>
       </div>
       <div>

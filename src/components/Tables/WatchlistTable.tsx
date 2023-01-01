@@ -28,8 +28,6 @@ export const WatchList: React.FC = () => {
             <th className="px-6 py-4 text-left font-semibold">Name</th>
             <th className="px-6 py-4 text-left font-semibold">Price</th>
             <th className="px-6 py-4 text-left font-semibold">24h%</th>
-            <th className="px-6 py-4 text-left font-semibold">7d%</th>
-            <th className="px-6 py-4 text-left font-semibold">14d%</th>
             <th className="px-6 py-4 text-left font-semibold">Volume</th>
           </tr>
         </thead>
@@ -51,12 +49,6 @@ export const WatchList: React.FC = () => {
                 </td>
                 <td className="px-6 py-4 text-left font-semibold">
                   {coin.price_change_percentage_24h}
-                </td>
-                <td className="px-6 py-4 text-left font-semibold">
-                  {coin.price_change_percentage_7d}
-                </td>
-                <td className="px-6 py-4 text-left font-semibold">
-                  {coin.price_change_percentage_14d}
                 </td>
                 <td className="px-6 py-4 text-left font-semibold">
                   {coin.total_volume}

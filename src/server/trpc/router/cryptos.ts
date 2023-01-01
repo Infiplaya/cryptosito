@@ -1,6 +1,5 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { z } from 'zod';
-import { TypeOf } from "yup";
 
 
 const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
@@ -37,6 +36,7 @@ export const cryptosRouter = router({
 
 
 const coinResult = z.object({
+  id: z.string(),
   name: z.string(),
   image: z.object({
     large: z.string(),
@@ -181,6 +181,7 @@ export const watchlistRouter = router({
   addToWatchlist: protectedProcedure
     .input(
       z.object({
+        id: z.string(),
         name: z.string(),
         rank: z.number(),
         userId: z.string().optional(),
@@ -195,6 +196,7 @@ export const watchlistRouter = router({
       try {
         await ctx.prisma.coin.create({
           data: {
+            id: input.id,
             name: input.name,
             rank: input.rank,
             userId: input.userId,

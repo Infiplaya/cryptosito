@@ -20,6 +20,8 @@ const Coin: NextPage = () => {
       </div>
     );
 
+  console.log(getCoin.id);
+
   return (
     <>
       <Head>
@@ -32,8 +34,10 @@ const Coin: NextPage = () => {
         <div>
           <CoinInfo getCoin={getCoin} />
           {getCoin.market_data?.sparkline_7d ? (
-            <div className="md:w-1/2 mt-20">
-              <h3 className="text-2xl font-bold mb-10">{getCoin.name} to USD chart</h3>
+            <div className="mt-20 md:w-1/2">
+              <h3 className="mb-10 text-2xl font-bold">
+                {getCoin.name} to USD chart
+              </h3>
               <Sparklines data={getCoin.market_data.sparkline_7d.price}>
                 <SparklinesLine
                   color={
