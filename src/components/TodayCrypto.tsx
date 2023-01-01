@@ -2,9 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { trpc } from "../utils/trpc";
+import { GlobalData } from "../server/trpc/router/cryptos";
 
-const TodayCrypto = () => {
-  const { data: globalInfo } = trpc.globalInfo.getGlobal.useQuery();
+const TodayCrypto = ({ globalInfo }: {globalInfo: GlobalData}) => {
   const market_cap = globalInfo?.data?.total_market_cap.usd;
   const change_percentage =
     globalInfo?.data?.market_cap_change_percentage_24h_usd;

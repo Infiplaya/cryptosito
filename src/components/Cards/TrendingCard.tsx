@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 
 type GetTrendingCoins = {
   symbol: string;
@@ -14,7 +14,7 @@ export const TrendingCard:React.FC<{coins: GetTrendingCoins}> = ({ coins }) => {
       <div className="flex justify-between align-middle">
         <h2 className="text-md ml-5 p-5 font-bold">🔥 Trending</h2>
       </div>
-      <ul className="ml-5 space-y-4 text-xs font-bold text-gray-800 dark:text-gray-200">
+      <ul className="ml-5 flex flex-col gap-3 text-xs font-bold text-gray-800 dark:text-gray-200">
         {coins.slice(0, 3).map((coin) => (
           <Link
             href="/currencies/[id]"

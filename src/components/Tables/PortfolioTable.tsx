@@ -4,34 +4,41 @@ import { trpc } from "../../utils/trpc";
 export const PortfolioTable = () => {
   const { data: boughtCoins, isLoading } = trpc.buyCoin.getAll.useQuery();
 
+  console.log(boughtCoins);
+
   if (isLoading) {
     return <div>Loading data...</div>;
   }
 
   return (
-    <table className="min-w-full table-auto text-sm font-semibold md:table-fixed">
+    <table className="table-auto text-sm font-semibold">
       <thead>
         <tr className="text-base">
           <th className="px-6 py-4 text-left font-semibold">Name</th>
-          <th className="px-6 py-4 text-left font-semibold">Price</th>
           <th className="px-6 py-4 text-left font-semibold">Shares</th>
+          <th className="px-6 py-4 text-left font-semibold">Total cost</th>
         </tr>
       </thead>
       <tbody>
         {boughtCoins?.map((coin) => (
-          <Link href={`/currencies/${coin.name.toLowerCase()}`} key={coin.id}>
-            <tr className="cursor-pointer border-b border-slate-200 hover:bg-blue-500/10 dark:border-slate-800">
+          <>
+            <tr className="w-full cursor-pointer border-b border-slate-200 hover:bg-blue-500/10 dark:border-slate-800">
               <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                {coin.name}
+                <a
+                  href={`/currencies/${coin.name.toLowerCase()}`}
+                  key={coin.name}
+                >
+                  {coin.name}
+                </a>
               </td>
               <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                {coin.price}
+                {coin._sum.shares}
               </td>
               <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                {coin.shares}
+                ${coin._sum.price?.toFixed(2)}
               </td>
             </tr>
-          </Link>
+          </>
         ))}
       </tbody>
     </table>

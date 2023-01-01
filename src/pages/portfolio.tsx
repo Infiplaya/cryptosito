@@ -14,7 +14,9 @@ const Portfolio = () => {
             <h1 className="border-gray-200 p-5 text-2xl font-bold dark:border-gray-800">
               Portfolio
             </h1>
-            <h2 className="text-xl font-semibold mt-10 mb-5">History of transaction</h2>
+            <h2 className="mt-10 mb-5 text-xl font-semibold">
+              Your bought coins
+            </h2>
             <PortfolioTable />
           </>
         ) : (

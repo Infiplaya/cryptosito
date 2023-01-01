@@ -8,10 +8,20 @@ import Navbar from "../components/Header/Header";
 import { trpc } from "../utils/trpc";
 import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
+import Loader from "../components/Loader";
 
 const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
   const { data: cryptoData } = trpc.cryptos.getCryptos.useQuery();
+  const { data: globalInfo } = trpc.globalInfo.getGlobal.useQuery();
+
+  if (!globalInfo || !cryptoData) {
+    return (
+      <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
+        <Loader />
+      </main>
+    );
+  }
 
   return (
     <>
@@ -25,11 +35,15 @@ const Home: NextPage = () => {
       <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
         <GradientBg />
         <div className="flex w-full gap-3 align-middle">
-          <TodayCrypto />
+          <TodayCrypto globalInfo={globalInfo} />
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
         {enabled ? <Trending /> : null}
-        {cryptoData ? <FilterableCryptoTable cryptoData={cryptoData} /> : null}
+        {cryptoData ? (
+          <FilterableCryptoTable cryptoData={cryptoData} />
+        ) : (
+          <Loader />
+        )}
       </main>
     </>
   );

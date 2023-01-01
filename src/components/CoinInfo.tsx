@@ -1,5 +1,5 @@
 import { useSession, signIn } from "next-auth/react";
-import Image from "next/future/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { RouterOutput } from "../server/trpc/router";

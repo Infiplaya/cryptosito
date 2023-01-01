@@ -6,7 +6,7 @@ export const RecentCard: React.FC<{ recentCoins: JSX.Element[] }> = ({
       <div className="flex justify-between align-middle">
         <h2 className="text-md ml-5 p-5 font-bold">🕑 Recently Added</h2>
       </div>
-      <ul className="ml-5 space-y-4 text-xs font-bold text-gray-800 dark:text-gray-200">
+      <ul className="ml-5 flex flex-col gap-3 text-xs font-bold text-gray-800 dark:text-gray-200">
         {recentCoins}
       </ul>
     </div>

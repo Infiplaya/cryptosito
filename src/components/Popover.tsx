@@ -1,6 +1,6 @@
 import { Popover, Transition } from "@headlessui/react";
 import { useSession } from "next-auth/react";
-import Image from "next/future/image";
+import Image from "next/image";
 import { Fragment } from "react";
 import Link from "next/link";
 

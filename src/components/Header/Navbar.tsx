@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/future/image";
+import Image from "next/image";
 import logo from "../../../public/logo.png";
 import { useSession, signIn } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
