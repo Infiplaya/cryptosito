@@ -31,21 +31,6 @@ type Coin = z.infer<typeof coinSchema>;
 
 export const CoinItem = ({ coin }: { coin: Coin }) => {
   const [savedCoin, setSavedCoin] = useState(false);
-  const { data: coins } = trpc.watchlist.getAll.useQuery();
-
-  const coinCount = useCallback(() => {
-    coins?.map((watchCoin) => {
-      console.log(watchCoin.name);
-      console.log(coin.name);
-      if (watchCoin.name === coin.name) {
-        setSavedCoin(true);
-      }
-    });
-  }, [coin.name, coins]);
-
-  useEffect(() => {
-    coinCount();
-  }, [coinCount]);
 
   const utils = trpc.useContext();
   const { data: session } = useSession();
@@ -62,6 +47,9 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
     onSettled: () => {
       utils.watchlist.getAll.invalidate();
     },
+    onSuccess: () => {
+      setSavedCoin(true);
+    },
   });
 
   const handleAddCoin = async () => {
@@ -75,40 +63,14 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
         price_change_percentage_24h: coin.price_change_percentage_24h,
         total_volume: coin.total_volume,
       });
-    setSavedCoin(true);
   };
-
-  const deleteCoin = trpc.watchlist.deleteFromWatchlist.useMutation({
-    onMutate: () => {
-      utils.watchlist.getAll.cancel();
-      const optimisticUpdate = utils.watchlist.getAll.getData();
-
-      if (optimisticUpdate) {
-        utils.watchlist.getAll.setData(undefined, optimisticUpdate);
-      }
-    },
-    onSettled: () => {
-      utils.watchlist.getAll.invalidate();
-    },
-  });
-
-  const handleDeleteCoin = async () => {
-    deleteCoin.mutate({
-      id: coin.id,
-    });
-    setSavedCoin(false);
-  };
-
-  console.log(coin.id);
 
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-      <td
-        className="py-4 px-6"
-        onClick={savedCoin ? handleDeleteCoin : handleAddCoin}
-      >
+      <td className="py-4 px-6" onClick={handleAddCoin}>
         <FontAwesomeIcon
           icon={savedCoin ? faStar : outlineStar}
+          className={savedCoin ? "text-yellow-500" : "text-gray-500"}
           cursor={`pointer`}
         />
       </td>
