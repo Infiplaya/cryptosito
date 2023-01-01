@@ -16,6 +16,7 @@ export const PortfolioTable = () => {
         <tr className="text-base">
           <th className="px-6 py-4 text-left font-semibold">Name</th>
           <th className="px-6 py-4 text-left font-semibold">Shares</th>
+          <th className="px-6 py-4 text-left font-semibold">Price</th>
           <th className="px-6 py-4 text-left font-semibold">Total cost</th>
         </tr>
       </thead>
@@ -35,7 +36,10 @@ export const PortfolioTable = () => {
                 {coin._sum.shares}
               </td>
               <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                ${coin._sum.price?.toFixed(2)}
+                ${coin.price}
+              </td>
+              <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
+                ${coin.price! * coin._sum.shares!}
               </td>
             </tr>
           </>

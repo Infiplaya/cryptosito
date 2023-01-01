@@ -268,10 +268,9 @@ export const buyRouter = router({
     getAll: publicProcedure.query(async ({ ctx }) => {
       try {
         return await ctx.prisma.buyCoin.groupBy({
-          by: ["name"],
+          by: ["name", "price"],
           _sum: {
             shares: true,
-            price: true,
           }
         });
       } catch (error) {
