@@ -1,6 +1,7 @@
 import Navbar from "../components/Header/Header";
 import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Profile = () => {
   const { data: session } = useSession();
@@ -28,7 +29,8 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-10 self-center">
-            <h2 className="lg:text-3xl">*Something*</h2>
+            <Link href={"/watchlist"}>Your Watchlist</Link>
+            <Link href={"/portfolio"}>Your Portfolio</Link>
           </div>
         </main>
       </>

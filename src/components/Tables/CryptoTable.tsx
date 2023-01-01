@@ -1,221 +1,156 @@
-import { useState } from "react";
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  getSortedRowModel,
-  SortingState,
-  getPaginationRowModel,
-} from "@tanstack/react-table";
-
-import Link from "next/link";
-import { Pagination } from "../Pagination";
-
-import { Sparklines, SparklinesLine } from "react-sparklines";
-
-interface Props {
-  cryptoData: CryptoData[];
-}
-
-export type CryptoData = {
-  id: string;
-  market_cap_rank: number;
-  name: string;
-  current_price: number;
-  price_change_percentage_1h_in_currency: number;
-  price_change_percentage_24h: number;
-  price_change_percentage_7d_in_currency: number;
-  market_cap: number;
-  total_volume: number;
-  circulating_supply: number;
-  sparkline_in_7d: Sparkline;
-};
+import { useState, useCallback } from "react";
+import { z } from "zod";
+import { CryptoData } from "../../server/trpc/router/cryptos";
+import { CoinItem } from "./CoinItem";
 
 type Sparkline = {
   price: Array<number>;
 };
 
-const dollar = new Intl.NumberFormat("eng-EN", {
-  style: "currency",
-  currency: "USD",
-});
+type Data = CryptoData;
 
-const normal = new Intl.NumberFormat("eng-EN", {});
+type SortKeys = keyof Data[0];
 
-const columnHelper = createColumnHelper<CryptoData>();
+type SortOrder = "ascn" | "desc";
 
-const columns = [
-  columnHelper.accessor("market_cap_rank", {
-    cell: (info) => info.getValue(),
-    header: () => <span>#</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor((row) => row.id, {
-    id: "name",
-    cell: (info) => (
-      <Link href={`/currencies/${info.getValue().toLowerCase()}`}>
-        {info.getValue().toUpperCase()}
-      </Link>
-    ),
-    header: () => <span>Name</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("current_price", {
-    header: () => "Price",
-    cell: (info) => <span>{dollar.format(info.getValue())}</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("price_change_percentage_1h_in_currency", {
-    header: () => <span>1h%</span>,
-    cell: (info) => (
-      <span
-        className={
-          info.getValue() > 0
-            ? `text-green-600 dark:text-green-500`
-            : `text-red-600 dark:text-red-500`
-        }
-      >
-        {Math.round(info.getValue() * 100) / 100}%
-      </span>
-    ),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("price_change_percentage_24h", {
-    header: "24h%",
-    cell: (info) => (
-      <span
-        className={
-          info.getValue() > 0
-            ? `text-green-600 dark:text-green-500`
-            : `text-red-600 dark:text-red-500`
-        }
-      >
-        {Math.round(info.getValue() * 100) / 100}%
-      </span>
-    ),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("price_change_percentage_7d_in_currency", {
-    header: "7d%",
-    cell: (info) => (
-      <span
-        className={
-          info.getValue() > 0
-            ? `text-green-600 dark:text-green-500`
-            : `text-red-600 dark:text-red-500`
-        }
-      >
-        {Math.round(info.getValue() * 100) / 100}%
-      </span>
-    ),
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("market_cap", {
-    header: "Market Cap",
-    cell: (info) => <span>{dollar.format(info.getValue())}</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("total_volume", {
-    header: "Volume",
-    cell: (info) => <span>{dollar.format(info.getValue())}</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("circulating_supply", {
-    header: "Circulating Supply",
-    cell: (info) => <span>{normal.format(Math.round(info.getValue()))}</span>,
-    footer: (info) => info.column.id,
-  }),
-  columnHelper.accessor("sparkline_in_7d.price", {
-    header: "Last 7 Days",
-    cell: (info) => (
-      <Sparklines data={info.getValue()}>
-        <SparklinesLine color="teal"></SparklinesLine>
-      </Sparklines>
-    ),
-  }),
-];
+function sortData({
+  tableData,
+  sortKey,
+  reverse,
+}: {
+  tableData: Data;
+  sortKey: SortKeys;
+  reverse: boolean;
+}) {
+  if (!sortKey) return tableData;
 
-export function CryptoTable({ cryptoData }: Props): JSX.Element {
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [data, setData] = useState(() => [...cryptoData]);
-
-  const table = useReactTable({
-    data,
-    columns,
-    state: {
-      sorting,
-    },
-    initialState: {
-      pagination: {
-        pageSize: 25,
-      },
-    },
-    onSortingChange: setSorting,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    debugTable: true,
+  const sortedData = tableData.sort((a, b) => {
+    return a[sortKey] > b[sortKey] ? 1 : -1;
   });
+
+  if (reverse) {
+    return sortedData.reverse();
+  }
+
+  return sortedData;
+}
+
+function SortButton({
+  sortOrder,
+  columnKey,
+  sortKey,
+  onClick,
+}: {
+  sortOrder: SortOrder;
+  columnKey: SortKeys;
+  sortKey: SortKeys;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+}) {
   return (
-    <div className="text-gray-800 dark:text-gray-300">
-      <table className="min-w-full table-auto text-sm font-semibold md:table-fixed">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
+    <button onClick={onClick}>
+      {sortKey === columnKey && sortOrder === "desc" ? "▼" : "▲"}
+    </button>
+  );
+}
+
+export function CryptoTable({
+  cryptoData,
+}: {
+  cryptoData: CryptoData;
+}): JSX.Element {
+  const [searchText, setSearchText] = useState("");
+  const [sortKey, setSortKey] = useState<SortKeys>("market_cap_rank");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+
+  function hideRows(key: string) {
+    if (key === "total_volume" || key === "market_cap") {
+      return "hidden md:table-cell";
+    } else {
+      return;
+    }
+  }
+
+  const headers: { key: SortKeys; label: string }[] = [
+    { key: "market_cap_rank", label: "#" },
+    { key: "name", label: "Coin" },
+    { key: "current_price", label: "Price" },
+    { key: "price_change_percentage_24h", label: "24h %" },
+    { key: "total_volume", label: "Volume 24h" },
+    { key: "market_cap", label: "Market Cap" },
+  ];
+
+  const sortedCoins = useCallback(
+    () =>
+      sortData({
+        tableData: cryptoData,
+        sortKey,
+        reverse: sortOrder === "desc",
+      }),
+    [cryptoData, sortKey, sortOrder]
+  );
+
+  function changeSort(key: SortKeys) {
+    setSortOrder(sortOrder === "ascn" ? "desc" : "ascn");
+
+    setSortKey(key);
+  }
+
+  return (
+    <div>
+      <div className="mt-10">
+        <h3 className="mb-2 text-2xl font-bold">Search Cryptos</h3>
+        <form className="mt-2">
+          <input
+            type="text"
+            onChange={(e) => setSearchText(e.target.value)}
+            placeholder="Search a coin"
+            className="w-full rounded-lg py-1 px-3 shadow-md md:w-64"
+          />
+        </form>
+      </div>
+      <div className="relative mt-5 overflow-x-auto">
+        <table className="w-full text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
+          <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th className="py-3 px-6"></th>
+              {headers.map((row) => {
                 return (
-                  <th
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    className="px-6 py-4 text-left font-semibold"
+                  <td
+                    key={row.key}
+                    className={`${hideRows(row.key)} py-3 px-6`}
                   >
-                    {header.isPlaceholder ? null : (
-                      <div
-                        {...{
-                          className: header.column.getCanSort()
-                            ? "cursor-pointer select-none"
-                            : "",
-                          onClick: header.column.getToggleSortingHandler(),
-                        }}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: " ▲",
-                          desc: " ▼",
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                    )}
-                  </th>
+                    {row.label}{" "}
+                    <SortButton
+                      columnKey={row.key}
+                      onClick={() => changeSort(row.key)}
+                      {...{
+                        sortOrder,
+                        sortKey,
+                      }}
+                    />
+                  </td>
                 );
               })}
+              <th className="py-3 px-6">7D</th>
             </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr
-              key={row.id}
-              className={`border-b border-gray-200 dark:border-gray-800 dark:hover:bg-blue-900/10`}
-            >
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  className="whitespace-nowrap px-6 py-4"
-                  title="Click on the coin name to go to it's detail page"
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
+          </thead>
+          <tbody>
+            {sortedCoins()
+              .filter((val: any) => {
+                if (searchText === "") {
+                  return val;
+                } else if (
+                  val.name.toLowerCase().includes(searchText.toLowerCase())
+                ) {
+                  return val;
+                }
+              })
+              .map((coin) => (
+                <CoinItem coin={coin} key={coin.id} />
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="mt-5 h-2" />
-      <Pagination table={table} />
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

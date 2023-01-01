@@ -8,6 +8,8 @@ const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&orde
 const cryptosResult = z.array(z.object({
   market_cap_rank: z.number(),
   name: z.string(),
+  symbol: z.string(),
+  image: z.string(),
   id: z.string(),
   current_price: z.number(),
   price_change_percentage_1h_in_currency: z.number(),
