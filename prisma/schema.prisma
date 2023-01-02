@@ -70,6 +70,7 @@ model Coin {
   id                          String   @id @default(cuid())
   createdAt                   DateTime @default(now())
   name                        String
+  image                       String
   rank                        Int?
   User                        User?    @relation(fields: [userId], references: [id])
   userId                      String?
@@ -86,6 +87,7 @@ model BuyCoin {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   name      String
+  image     String
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
   price     Float?
