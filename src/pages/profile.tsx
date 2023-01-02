@@ -1,11 +1,14 @@
 import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+
 import { Timeline } from "../components/Tweets/Timeline";
 
 const Profile = () => {
   const { data: session } = useSession();
-  const name = session?.user?.name as string
+
+
+  const name = session?.user?.name as string;
   if (session) {
     return (
       <>
@@ -28,14 +31,22 @@ const Profile = () => {
               <h2 className="mt-5 text-center">{session.user?.email}</h2>
             </div>
           </div>
-          <div className="mt-10 self-center">
-            <Link href={"/watchlist"}>Your Watchlist</Link>
-            <Link href={"/portfolio"}>Your Portfolio</Link>
+          <div className="mt-5">
+            <ul>
+              <li className="text-xl hover:underline">
+                <Link href={"/watchlist"}>Your Watchlist</Link>
+              </li>
+
+              <li className="text-xl hover:underline">
+                <Link href={"/portfolio"}>Your Portfolio</Link>
+              </li>
+            </ul>
           </div>
+          <h3 className="text-3xl text-center font-bold mt-5 -mb-5">Your timeline</h3>
           <Timeline
             where={{
               author: {
-                name
+                name,
               },
             }}
           />

@@ -1,12 +1,11 @@
 import { useSession, signIn } from "next-auth/react";
-import Navbar from "../components/Header/Header";
 import { PortfolioTable } from "../components/Tables/PortfolioTable";
 
 const Portfolio = () => {
   const { data: session } = useSession();
+
   return (
     <>
-      <Navbar />
       <main className="mx-auto flex min-h-screen w-screen flex-col p-4 align-middle lg:container lg:px-16">
         {session ? (
           <>

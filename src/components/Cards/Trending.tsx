@@ -3,7 +3,7 @@ import Image from "next/image";
 import "keen-slider/keen-slider.min.css";
 import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
-import { SlidingCards } from "./SlidingCards";
+import { CommunityPostCard } from "./CommunityPostCard";
 import { trpc } from "../../utils/trpc";
 import Loader from "../Loader";
 
@@ -16,7 +16,13 @@ const Trending = ({}) => {
     <Link href="/currencies/[id]" as={`currencies/${coin.id}`} key={coin.id}>
       <li>
         <div className="flex items-center gap-2">
-          <Image src={coin.image} alt={`thumb`} width={20} height={20} className="rounded-full"></Image>
+          <Image
+            src={coin.image}
+            alt={`thumb`}
+            width={20}
+            height={20}
+            className="rounded-full"
+          ></Image>
           <span>{coin.name}</span>{" "}
           <span className="text-gray-400">{coin.symbol.toUpperCase()}</span>{" "}
         </div>
@@ -28,7 +34,7 @@ const Trending = ({}) => {
     <div className="container mx-auto mt-10 hidden gap-5 md:flex lg:h-48">
       {coins ? <TrendingCard coins={coins} /> : <div>Loading...</div>}
       {recentCoins ? <RecentCard recentCoins={recentCoins} /> : <Loader />}
-      <SlidingCards />
+      <CommunityPostCard />
     </div>
   );
 };

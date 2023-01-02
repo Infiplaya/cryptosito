@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../../../utils/trpc";
 import { useRouter } from "next/router";
-import Header from "../../../components/Header/Header";
 import Loader from "../../../components/Loader";
 import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinInfo } from "../../../components/CoinInfo";
@@ -20,7 +19,6 @@ const Coin: NextPage = () => {
       </div>
     );
 
-  console.log(getCoin.id);
 
   return (
     <>

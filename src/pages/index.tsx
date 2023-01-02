@@ -4,7 +4,6 @@ import { useState } from "react";
 import FilterableCryptoTable from "../components/Tables/FilterableCryptoTable";
 import TodayCrypto from "../components/TodayCrypto";
 import Trending from "../components/Cards/Trending";
-import Navbar from "../components/Header/Header";
 import { trpc } from "../utils/trpc";
 import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
