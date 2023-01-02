@@ -37,27 +37,27 @@ export function CreateTweet() {
   }
 
   return (
-    <>
+    <div className="p-2">
       <p className="p-3 font-semibold text-red-500">{error && error}</p>
-      <p className="px-4 text-xl font-semibold">What do you want to share?</p>
+      <p className="px-4 text-xl md:text-3xl font-semibold">What do you want to share?</p>
       <form
         onSubmit={handleSubmit}
-        className="mb-4 flex w-full flex-col rounded-md border-2 p-4"
+        className="mb-4 mt-3 flex w-full flex-col rounded-md border border-gray-200 p-4 dark:border-gray-700"
       >
         <textarea
-          className="w-full h-44 p-4 shadow resize-none"
+          className="h-44 w-full resize-none bg-gray-50 p-4 shadow rounded-lg dark:bg-gray-700"
           onChange={(e) => setText(e.target.value)}
         />
 
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex justify-start">
           <button
-            className="rounded-md bg-primary px-4 py-2 text-white"
             type="submit"
+            className="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900"
           >
-            Tweet
+            Publish
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 }

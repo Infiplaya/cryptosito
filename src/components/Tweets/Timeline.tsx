@@ -12,7 +12,6 @@ import {
   QueryClient,
   useQueryClient,
 } from "@tanstack/react-query";
-import Link from "next/link";
 
 const LIMIT = 10;
 
@@ -144,8 +143,8 @@ function Tweet({
   const hasLiked = tweet.likes.length > 0;
 
   return (
-    <div className="mb-4 border-b-2 border-gray-500">
-      <div className="flex p-2 ">
+    <div className="mb-4 p-5 border rounded-lg bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700">
+      <div className="flex">
         {tweet.author.image ? (
           <Image
             src={tweet.author.image}
@@ -224,7 +223,7 @@ export function Timeline({
   return (
     <div>
       <CreateTweet />
-      <div className="border-l-2 border-r-2 border-t-2 border-gray-500">
+      <div className="p-2 mr-3">
         {tweets.map((tweet) => (
           <Tweet
             key={tweet.id}
@@ -237,7 +236,7 @@ export function Timeline({
           />
         ))}
 
-        {!hasNextPage && <p>No more tweets...</p>}
+        {!hasNextPage && <p className="text-xl">No more tweets...</p>}
       </div>
     </div>
   );
