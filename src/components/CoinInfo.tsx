@@ -128,7 +128,6 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
               className="mt-3 rounded-lg bg-blue-600 px-3 py-2  text-slate-50"
               onClick={async () => {
                 addCoin.mutate({
-                  id: getCoin.id,
                   name: getCoin.name,
                   rank: getCoin.market_cap_rank as number,
                   userId: session.user?.id,

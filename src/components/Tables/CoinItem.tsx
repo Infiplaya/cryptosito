@@ -55,7 +55,6 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
   const handleAddCoin = async () => {
     session &&
       addCoin.mutate({
-        id: coin.id,
         name: coin.name,
         rank: coin.market_cap_rank as number,
         userId: session.user?.id,

@@ -181,7 +181,6 @@ export const watchlistRouter = router({
   addToWatchlist: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
         name: z.string(),
         rank: z.number(),
         userId: z.string().optional(),
@@ -196,7 +195,6 @@ export const watchlistRouter = router({
       try {
         await ctx.prisma.coin.create({
           data: {
-            id: input.id,
             name: input.name,
             rank: input.rank,
             userId: input.userId,
