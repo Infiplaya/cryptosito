@@ -29,7 +29,6 @@ export const cryptosRouter = router({
     .query(async () => {
       const cryptos = await fetch(url).then(res =>
       res.json());
-      console.log(cryptos)
       const parsedData = cryptosResult.parse(cryptos);
       return parsedData
     }),
