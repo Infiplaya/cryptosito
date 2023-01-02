@@ -27,9 +27,6 @@ export const Navbar = () => {
         <Link href="/watchlist">
           <button
             className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-            onClick={() => {
-              !session ? signIn() : "";
-            }}
           >
             Watchlist
           </button>
@@ -39,9 +36,6 @@ export const Navbar = () => {
         <Link href="/portfolio">
           <button
             className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-            onClick={() => {
-              !session ? signIn() : "";
-            }}
           >
             Portfolio
           </button>
@@ -51,9 +45,6 @@ export const Navbar = () => {
         <Link href="/community">
           <button
             className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-            onClick={() => {
-              !session ? signIn() : "";
-            }}
           >
             Community
           </button>
@@ -63,9 +54,6 @@ export const Navbar = () => {
         <Link href="/profile">
           <button
             className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
-            onClick={() => {
-              !session ? signIn() : "";
-            }}
           >
             Profile
           </button>
