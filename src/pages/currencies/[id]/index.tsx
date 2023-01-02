@@ -29,7 +29,6 @@ const Coin: NextPage = () => {
         <meta name="description" content="some coinmarket clone" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
       <main className="dark:bg container mx-auto p-10 lg:px-16">
         <div>
           <CoinInfo getCoin={getCoin} />

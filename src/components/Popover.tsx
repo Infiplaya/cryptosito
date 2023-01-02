@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Image from "next/image";
 import { Fragment } from "react";
 import Link from "next/link";
@@ -49,7 +49,10 @@ export default function PopoverComponent() {
                     <span className="block text-sm">
                       <Link href={`/portfolio`}>Portfolio</Link>
                     </span>
-                    <button className="rounded-lg bg-blue-700 px-3 py-1 text-slate-200  dark:bg-blue-500 dark:text-slate-900">
+                    <button
+                      className="rounded-lg bg-blue-700 px-3 py-1 text-slate-200  dark:bg-blue-500 dark:text-slate-900"
+                      onClick={() => signOut()}
+                    >
                       Sign out
                     </button>
                   </div>

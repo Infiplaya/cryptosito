@@ -48,6 +48,18 @@ export const Navbar = () => {
         </Link>
       </li>
       <li className="mr-5 hidden md:block">
+        <Link href="/community">
+          <button
+            className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"
+            onClick={() => {
+              !session ? signIn() : "";
+            }}
+          >
+            Community
+          </button>
+        </Link>
+      </li>
+      <li className="mr-5 hidden md:block">
         <Link href="/profile">
           <button
             className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800"

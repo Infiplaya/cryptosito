@@ -133,7 +133,7 @@ export function CryptoTable({
                   </td>
                 );
               })}
-              <th className="py-3 px-6">7D</th>
+              <th className="py-3 px-6 hidden md:table-cell">7D</th>
             </tr>
           </thead>
           <tbody>

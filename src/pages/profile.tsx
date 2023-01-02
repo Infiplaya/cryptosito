@@ -1,14 +1,14 @@
-import Navbar from "../components/Header/Header";
 import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { Timeline } from "../components/Tweets/Timeline";
 
 const Profile = () => {
   const { data: session } = useSession();
+  const name = session?.user?.name as string
   if (session) {
     return (
       <>
-        <Navbar />
         <main className="mx-auto flex min-h-screen w-screen flex-col p-4 align-middle lg:container lg:px-16">
           <h1 className="border-b border-gray-800 p-5 text-3xl font-bold">
             Profile
@@ -32,13 +32,19 @@ const Profile = () => {
             <Link href={"/watchlist"}>Your Watchlist</Link>
             <Link href={"/portfolio"}>Your Portfolio</Link>
           </div>
+          <Timeline
+            where={{
+              author: {
+                name
+              },
+            }}
+          />
         </main>
       </>
     );
   }
   return (
     <>
-      <Navbar />
       <main className="flex h-96 items-center justify-center">
         <button
           onClick={() => signIn()}

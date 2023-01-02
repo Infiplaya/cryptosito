@@ -15,7 +15,7 @@ export const CoinDescription: React.FC<{
   }
 
   return (
-    <section className="mt-5 w-1/2">
+    <section className="mt-5 w-full md:w-1/2">
       <p className="text-2xl font-bold">About {name}</p>
       {showMore ? (
         <p

@@ -31,7 +31,6 @@ const Home: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
       <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
         <GradientBg />
         <div className="flex w-full gap-3 align-middle">

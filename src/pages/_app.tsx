@@ -8,6 +8,7 @@ import { ThemeProvider } from "next-themes";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "../components/Footer";
+import Header from "../components/Header/Header";
 config.autoAddCss = false;
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -17,6 +18,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
+        <Header />
         <Component {...pageProps} />
         <Footer />
       </ThemeProvider>
