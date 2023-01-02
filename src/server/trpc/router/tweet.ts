@@ -90,6 +90,40 @@ export const tweetRouter = router({
       };
     }),
 
+    topPost: publicProcedure
+    .query(async ({ctx}) => {
+      const { prisma } = ctx;
+      const userId = ctx.session?.user?.id
+
+      return await prisma.tweet.findFirst({
+        orderBy: {
+          createdAt: "desc"
+        },
+        include: {
+          likes: {
+            where: {
+              userId,
+            },
+            select: {
+              userId: true,
+            },
+          },
+          author: {
+            select: {
+              name: true,
+              image: true,
+              id: true,
+            },
+          },
+          _count: {
+            select: {
+              likes: true,
+            },
+          },
+        },
+      })
+    }),
+
   like: protectedProcedure
     .input(
       z.object({
