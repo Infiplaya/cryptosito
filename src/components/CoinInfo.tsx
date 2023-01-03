@@ -168,8 +168,8 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
           <button
             disabled
             className={
-              getCoin.market_data &&
-              getCoin.market_data.price_change_percentage_24h > 0
+              getCoin.market_data?.price_change_percentage_24h &&
+              getCoin.market_data?.price_change_percentage_24h > 0
                 ? `rounded bg-green-500  px-2 py-1 text-gray-50`
                 : `rounded bg-red-500 px-2 py-1 text-gray-50`
             }
