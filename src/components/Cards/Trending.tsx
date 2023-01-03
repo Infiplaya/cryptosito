@@ -4,12 +4,16 @@ import "keen-slider/keen-slider.min.css";
 import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
 import { CommunityPostCard } from "./CommunityPostCard";
-import { trpc } from "../../utils/trpc";
 import Loader from "../Loader";
+import { RecentData, TrendingData } from "../../server/trpc/router/cryptos";
 
-const Trending = ({}) => {
-  const { data: recentData } = trpc.recent.getRecent.useQuery();
-  const { data: trendingData } = trpc.trending.getTrending.useQuery();
+const Trending = ({
+  trendingData,
+  recentData,
+}: {
+  trendingData: TrendingData;
+  recentData: RecentData;
+}) => {
   const coins = trendingData?.coins.map((coin) => coin.item);
 
   const recentCoins = recentData?.map((coin) => (

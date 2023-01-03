@@ -129,6 +129,8 @@ const trendingResult = z.object({
   }))
 })
 
+export type TrendingData = z.infer<typeof trendingResult>
+
 export const trendingRouter = router({
   getTrending: publicProcedure
     .query(async () => {
@@ -147,6 +149,8 @@ const recentResult = z.array(z.object({
   name: z.string()
 },
 ))
+
+export type RecentData = z.infer<typeof recentResult>
 
 export const recentRouter = router({
   getRecent: publicProcedure

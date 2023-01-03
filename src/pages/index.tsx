@@ -13,8 +13,10 @@ const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
   const { data: cryptoData } = trpc.cryptos.getCryptos.useQuery();
   const { data: globalInfo } = trpc.globalInfo.getGlobal.useQuery();
+  const { data: recentData } = trpc.recent.getRecent.useQuery();
+  const { data: trendingData } = trpc.trending.getTrending.useQuery();
 
-  if (!globalInfo || !cryptoData) {
+  if (!globalInfo || !cryptoData || !recentData || !trendingData) {
     return (
       <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
         <Loader />
@@ -36,12 +38,10 @@ const Home: NextPage = () => {
           <TodayCrypto globalInfo={globalInfo} />
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
-        {enabled ? <Trending /> : null}
-        {cryptoData ? (
-          <FilterableCryptoTable cryptoData={cryptoData} />
-        ) : (
-          <Loader />
-        )}
+        {enabled ? (
+          <Trending recentData={recentData} trendingData={trendingData} />
+        ) : null}
+        {<FilterableCryptoTable cryptoData={cryptoData} />}
       </main>
     </>
   );
