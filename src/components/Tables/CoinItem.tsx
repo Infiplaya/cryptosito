@@ -17,7 +17,7 @@ const coinSchema = z.object({
   id: z.string(),
   current_price: z.number(),
   price_change_percentage_1h_in_currency: z.number().nullable(),
-  price_change_percentage_24h: z.number(),
+  price_change_percentage_24h: z.number().nullable(),
   price_change_percentage_7d_in_currency: z.number().nullable(),
   market_cap: z.number(),
   total_volume: z.number(),
@@ -59,7 +59,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
         rank: coin.market_cap_rank as number,
         userId: session.user?.id,
         price: coin.current_price,
-        price_change_percentage_24h: coin.price_change_percentage_24h,
+        price_change_percentage_24h: coin.price_change_percentage_24h as number,
         total_volume: coin.total_volume,
       });
   };
@@ -103,12 +103,12 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       </td>
       <td
         className={`${
-          coin.price_change_percentage_24h > 0
+          coin.price_change_percentage_24h! > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_24h.toFixed(2)}%
+        {coin.price_change_percentage_24h!.toFixed(2)}%
       </td>
       <td
         className={`${
@@ -128,7 +128,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="hidden w-52 py-4 px-6 md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine
-            color={coin.price_change_percentage_24h > 0 ? "teal" : "red"}
+            color={coin.price_change_percentage_24h! > 0 ? "teal" : "red"}
           />
         </Sparklines>
       </td>
