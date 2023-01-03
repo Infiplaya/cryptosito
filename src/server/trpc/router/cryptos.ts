@@ -12,7 +12,7 @@ const cryptosResult = z.array(z.object({
   id: z.string(),
   current_price: z.number(),
   price_change_percentage_1h_in_currency: z.number().nullable(),
-  price_change_percentage_24h: z.number(),
+  price_change_percentage_24h: z.number().nullable(),
   price_change_percentage_7d_in_currency: z.number().nullable(),
   market_cap: z.number(),
   total_volume: z.number(),

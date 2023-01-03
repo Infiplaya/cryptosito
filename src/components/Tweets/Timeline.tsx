@@ -140,10 +140,12 @@ function Tweet({
     },
   }).mutateAsync;
 
+  const deleteMutation = trpc.tweet.delete.useMutation();
+
   const hasLiked = tweet.likes.length > 0;
 
   return (
-    <div className="mb-4 p-5 border rounded-lg bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700">
+    <div className="mb-4 rounded-lg border border-gray-300 bg-gray-50 p-5 dark:border-gray-700 dark:bg-gray-800">
       <div className="flex">
         {tweet.author.image ? (
           <Image
@@ -223,7 +225,7 @@ export function Timeline({
   return (
     <div>
       <CreateTweet />
-      <div className="p-2 mr-3">
+      <div className="mr-3 p-2">
         {tweets.map((tweet) => (
           <Tweet
             key={tweet.id}

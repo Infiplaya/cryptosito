@@ -20,6 +20,19 @@ export const tweetRouter = router({
       },
     });
   }),
+
+  delete: protectedProcedure
+  .input(z.object({
+    id: z.string(),
+  }))
+  .mutation(async ({ctx, input}) => {
+    await ctx.prisma.tweet.delete({
+      where: {
+        id: input.id,
+      }
+    })
+  }),
+
   timeline: publicProcedure
     .input(
       z.object({
