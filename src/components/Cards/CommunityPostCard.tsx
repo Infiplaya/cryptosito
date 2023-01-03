@@ -11,20 +11,20 @@ export const CommunityPostCard = () => {
       <div>
         <h2 className="text-md ml-5 p-5 font-bold">✨ Recent Community Post</h2>
       </div>
-      <div className="flex gap-3 ml-5">
+      <div className="flex gap-3 ml-5 text-sm">
         {recentPost?.author.image ? (
           <Image
             src={recentPost?.author.image}
             alt={`${recentPost?.author.name} profile`}
             width={36}
             height={36}
-            className="h-12 w-12 rounded-full"
+            className="h-10 w-10 rounded-full"
           ></Image>
         ) : null}
         <div className="ml-2">
           <div className="flex flex-col align-middle">
             <p className="font-bold">{recentPost?.author.name}</p>
-            <p className="whitespace-pre-line">{recentPost?.text}</p>
+            <p className="whitespace-pre-line truncate">{recentPost?.text}</p>
             <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">
               {" "}
               - {dayjs(recentPost?.createdAt).format("DD/MM/YYYY")}

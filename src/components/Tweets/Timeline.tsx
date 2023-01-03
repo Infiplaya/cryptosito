@@ -153,7 +153,7 @@ function Tweet({
             alt={`${tweet.author.name} profile`}
             width={48}
             height={48}
-            className="rounded-full"
+            className="rounded-full w-10 h-10"
           ></Image>
         ) : null}
         <div className="ml-2">
