@@ -5,7 +5,7 @@ import { PortfolioTable } from "../components/Tables/PortfolioTable";
 const Portfolio = () => {
   const router = useRouter();
 
-  const { status, data: session } = useSession({
+  const { status } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/api/auth/signin");

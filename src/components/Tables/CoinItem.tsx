@@ -99,7 +99,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_1h_in_currency!.toFixed(2)}%
+        {coin.price_change_percentage_1h_in_currency ? coin.price_change_percentage_1h_in_currency.toFixed(2) : "Null"}%
       </td>
       <td
         className={`${
@@ -108,7 +108,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_24h!.toFixed(2)}%
+        {coin.price_change_percentage_24h ? coin.price_change_percentage_24h.toFixed(2) : "Null"}%
       </td>
       <td
         className={`${
@@ -117,7 +117,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_7d_in_currency!.toFixed(2)}%
+        {coin.price_change_percentage_7d_in_currency ? coin.price_change_percentage_7d_in_currency.toFixed(2) : "Null"}%
       </td>
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.total_volume.toLocaleString()}
