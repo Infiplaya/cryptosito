@@ -133,11 +133,11 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
                   userId: session.user?.id,
                   price: getCoin.market_data?.current_price.usd,
                   price_change_percentage_24h:
-                    getCoin.market_data?.price_change_percentage_24h,
+                    getCoin.market_data?.price_change_percentage_24h as number,
                   price_change_percentage_7d:
-                    getCoin.market_data?.price_change_percentage_7d,
+                    getCoin.market_data?.price_change_percentage_7d as number,
                   price_change_percentage_14d:
-                    getCoin.market_data?.price_change_percentage_14d,
+                    getCoin.market_data?.price_change_percentage_14d as number,
                   total_volume: getCoin.market_data?.total_volume.usd,
                 });
               }}
@@ -169,7 +169,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
             disabled
             className={
               getCoin.market_data &&
-              getCoin.market_data.price_change_percentage_24h > 0
+              getCoin.market_data.price_change_percentage_24h! > 0
                 ? `rounded bg-green-500  px-2 py-1 text-gray-50`
                 : `rounded bg-red-500 px-2 py-1 text-gray-50`
             }

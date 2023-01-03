@@ -38,7 +38,7 @@ const Coin: NextPage = () => {
               <Sparklines data={getCoin.market_data.sparkline_7d.price}>
                 <SparklinesLine
                   color={
-                    getCoin.market_data.price_change_percentage_24h > 0
+                    getCoin.market_data.price_change_percentage_24h! > 0
                       ? "teal"
                       : "red"
                   }

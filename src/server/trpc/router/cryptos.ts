@@ -50,9 +50,9 @@ const coinResult = z.object({
     current_price: z.object({
       usd: z.number(),
     }),
-    price_change_percentage_24h: z.number(),
-    price_change_percentage_7d: z.number(),
-    price_change_percentage_14d: z.number(),
+    price_change_percentage_24h: z.number().nullable(),
+    price_change_percentage_7d: z.number().nullable(),
+    price_change_percentage_14d: z.number().nullable(),
     market_cap: z.object({
       usd: z.number(),
     }),
