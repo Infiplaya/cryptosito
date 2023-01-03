@@ -64,9 +64,13 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       });
   };
 
+  const handleAlert = () => {
+    alert("Must be signed in to add to watchlist")
+  }
+
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
-      <td className="py-4 px-6" onClick={handleAddCoin}>
+      <td className="py-4 px-6" onClick={session ? handleAddCoin : handleAlert}>
         <FontAwesomeIcon
           icon={savedCoin ? faStar : outlineStar}
           className={savedCoin ? "text-yellow-500" : "text-gray-500"}
