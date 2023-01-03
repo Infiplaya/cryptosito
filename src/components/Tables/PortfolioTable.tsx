@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 
 export const PortfolioTable = () => {

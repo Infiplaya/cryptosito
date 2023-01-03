@@ -1,4 +1,4 @@
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { PortfolioTable } from "../components/Tables/PortfolioTable";
 

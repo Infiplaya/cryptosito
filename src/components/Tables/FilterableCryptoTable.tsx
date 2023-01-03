@@ -12,8 +12,8 @@ export default function FilterableCryptoTable({ cryptoData }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
 
-  const handleCoinsPerPageChange = (event: any) => {
-    setCoinsPerPage(event.target.value);
+  const handleCoinsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCoinsPerPage(parseInt(event.target.value));
   };
 
   const lastCoinIndex = currentPage * coinsPerPage;

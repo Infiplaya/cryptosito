@@ -4,7 +4,7 @@ import { faStar as outlineStar } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { z } from "zod";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
@@ -65,8 +65,8 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
   };
 
   const handleAlert = () => {
-    alert("Must be signed in to add to watchlist")
-  }
+    alert("Must be signed in to add to watchlist");
+  };
 
   return (
     <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -98,30 +98,42 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="py-4 px-6">${coin.current_price.toLocaleString()}</td>
       <td
         className={`${
-          coin.price_change_percentage_1h_in_currency! > 0
+          coin.price_change_percentage_1h_in_currency &&
+          coin.price_change_percentage_1h_in_currency > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_1h_in_currency ? coin.price_change_percentage_1h_in_currency.toFixed(2) : "Null"}%
+        {coin.price_change_percentage_1h_in_currency
+          ? coin.price_change_percentage_1h_in_currency.toFixed(2)
+          : "Null"}
+        %
       </td>
       <td
         className={`${
-          coin.price_change_percentage_24h! > 0
+          coin.price_change_percentage_24h &&
+          coin.price_change_percentage_24h > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_24h ? coin.price_change_percentage_24h.toFixed(2) : "Null"}%
+        {coin.price_change_percentage_24h
+          ? coin.price_change_percentage_24h.toFixed(2)
+          : "Null"}
+        %
       </td>
       <td
         className={`${
-          coin.price_change_percentage_7d_in_currency! > 0
+          coin.price_change_percentage_7d_in_currency &&
+          coin.price_change_percentage_7d_in_currency > 0
             ? "text-green-500"
             : "text-red-500"
         } py-4 px-6`}
       >
-        {coin.price_change_percentage_7d_in_currency ? coin.price_change_percentage_7d_in_currency.toFixed(2) : "Null"}%
+        {coin.price_change_percentage_7d_in_currency
+          ? coin.price_change_percentage_7d_in_currency.toFixed(2)
+          : "Null"}
+        %
       </td>
       <td className="hidden py-4 px-6 md:table-cell">
         ${coin.total_volume.toLocaleString()}
@@ -132,7 +144,7 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="hidden w-52 py-4 px-6 md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine
-            color={coin.price_change_percentage_24h! > 0 ? "teal" : "red"}
+            color={coin.price_change_percentage_24h && coin.price_change_percentage_24h> 0 ? "teal" : "red"}
           />
         </Sparklines>
       </td>

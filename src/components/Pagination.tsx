@@ -6,7 +6,7 @@ const Pagination = ({
 }: {
   totalCoins: number;
   coinsPerPage: number;
-  setCurrentPage: any;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   currentPage: number;
 }) => {
   const totalPages = Math.ceil(totalCoins / coinsPerPage);

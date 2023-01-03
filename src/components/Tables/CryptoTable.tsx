@@ -1,11 +1,7 @@
 import { useState, useCallback } from "react";
-import { z } from "zod";
 import { CryptoData } from "../../server/trpc/router/cryptos";
 import { CoinItem } from "./CoinItem";
 
-type Sparkline = {
-  price: Array<number>;
-};
 
 type Data = CryptoData;
 
@@ -25,7 +21,7 @@ function sortData({
   if (!sortKey) return tableData;
 
   const sortedData = tableData.sort((a, b) => {
-    return a[sortKey]! > b[sortKey]! ? 1 : -1;
+    return a[sortKey]!  > b[sortKey]! ? 1 : -1;
   });
 
   if (reverse) {
@@ -137,7 +133,7 @@ export function CryptoTable({
           </thead>
           <tbody>
             {sortedCoins()
-              .filter((val: any) => {
+              .filter((val) => {
                 if (searchText === "") {
                   return val;
                 } else if (

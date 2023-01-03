@@ -28,7 +28,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
@@ -72,7 +72,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
     },
   });
 
-  async function onSubmit(data: any) {
+  async function onSubmit() {
     buyCoin.mutate({
       name: getCoin.name,
       userId: session?.user?.id,
@@ -169,7 +169,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
             disabled
             className={
               getCoin.market_data &&
-              getCoin.market_data.price_change_percentage_24h! > 0
+              getCoin.market_data.price_change_percentage_24h > 0
                 ? `rounded bg-green-500  px-2 py-1 text-gray-50`
                 : `rounded bg-red-500 px-2 py-1 text-gray-50`
             }

@@ -23,13 +23,15 @@ export function CreateTweet() {
     },
   });
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     try {
       await tweetSchema.parse({ text });
-    } catch (e: any) {
-      setError(e.issues[0].message);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
       return;
     }
 

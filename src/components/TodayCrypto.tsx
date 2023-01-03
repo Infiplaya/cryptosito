@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { trpc } from "../utils/trpc";
 import { GlobalData } from "../server/trpc/router/cryptos";
 
 const TodayCrypto = ({ globalInfo }: {globalInfo: GlobalData}) => {

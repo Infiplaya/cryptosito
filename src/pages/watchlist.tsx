@@ -5,7 +5,7 @@ import { WatchList } from "../components/Tables/WatchlistTable";
 const Watchlist = () => {
   const router = useRouter();
 
-  const { status, data: session } = useSession({
+  const { status } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/api/auth/signin");
