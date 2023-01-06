@@ -43,7 +43,7 @@ export const TopNav = () => {
       <li>
         Market Cap:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
-          {data?.total_market_cap.usd &&
+          {data?.total_market_cap?.usd &&
             Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -53,7 +53,7 @@ export const TopNav = () => {
       <li>
         Total Volume:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
-          {data?.total_volume.usd &&
+          {data?.total_volume?.usd &&
             Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -64,10 +64,10 @@ export const TopNav = () => {
         Dominance:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
           BTC:{" "}
-          {data?.market_cap_percentage.btc &&
+          {data?.market_cap_percentage?.btc &&
             Math.round(data.market_cap_percentage.btc * 100) / 100}
           %, ETH:{" "}
-          {data?.market_cap_percentage.eth &&
+          {data?.market_cap_percentage?.eth &&
             Math.round(data.market_cap_percentage.eth * 100) / 100}
           %
         </span>
