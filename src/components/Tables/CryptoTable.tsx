@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
-import { Crypto } from "../../types/crypto";
+import { CryptoData } from "../../server/trpc/router/cryptos";
 import { CoinItem } from "./CoinItem";
 
 
-type Data = Crypto[];
+type Data = CryptoData;
 
 type SortKeys = keyof Data[0];
 
@@ -52,7 +52,7 @@ function SortButton({
 export function CryptoTable({
   cryptoData,
 }: {
-  cryptoData: Crypto[];
+  cryptoData: CryptoData;
 }): JSX.Element {
   const [searchText, setSearchText] = useState("");
   const [sortKey, setSortKey] = useState<SortKeys>("market_cap_rank");

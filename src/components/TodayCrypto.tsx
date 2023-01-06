@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import { GlobalInfo } from "../types/global-info";
+import { GlobalData } from "../server/trpc/router/cryptos";
 
-const TodayCrypto = ({ globalInfo }: {globalInfo: GlobalInfo}) => {
+const TodayCrypto = ({ globalInfo }: {globalInfo: GlobalData}) => {
   const market_cap = globalInfo?.data?.total_market_cap.usd;
   const change_percentage =
     globalInfo?.data?.market_cap_change_percentage_24h_usd;

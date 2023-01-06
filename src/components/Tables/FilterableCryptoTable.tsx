@@ -2,9 +2,10 @@ import FilterOptionsBar from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
 import React, { useState } from "react";
 import Pagination from "../Pagination";
-import { Crypto } from "../../types/crypto";
+import { CryptoData } from "../../server/trpc/router/cryptos";
+
 interface Props {
-  cryptoData: Crypto[];
+  cryptoData: CryptoData;
 }
 
 export default function FilterableCryptoTable({ cryptoData }: Props) {

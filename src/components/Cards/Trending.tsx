@@ -5,17 +5,15 @@ import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
 import { CommunityPostCard } from "./CommunityPostCard";
 import Loader from "../Loader";
-import { RecentData } from "../../types/recent-data";
-import { TrendingData } from "../../types/trending";
+import { RecentData, TrendingData } from "../../server/trpc/router/cryptos";
 
 const Trending = ({
   trendingData,
   recentData,
 }: {
   trendingData: TrendingData;
-  recentData: RecentData[];
+  recentData: RecentData;
 }) => {
-  
   const coins = trendingData?.coins.map((coin) => coin.item);
 
   const recentCoins = recentData?.map((coin) => (

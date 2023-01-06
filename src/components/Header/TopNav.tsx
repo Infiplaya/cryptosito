@@ -1,38 +1,20 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { trpc } from "../../utils/trpc";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
-
 
 export const TopNav = () => {
-  const [data, setData] = useState<any>();
+  const {data: globalData} = trpc.globalInfo.getGlobal.useQuery();
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
 
-  useEffect(() => {
-    // fetch data
-    const dataFetch = async () => {
-      const data = await (
-        await fetch(
-          "https://api.coingecko.com/api/v3/global"
-        )
-      ).json();
-
-      // set state when the data received
-      setData(data);
-    };
-
-    dataFetch();
-  }, []);
+  const data = globalData?.data;
 
   return (
     <ul className="container flex h-12 gap-5 px-16 text-xs font-semibold text-gray-600 dark:text-gray-400 md:items-center">
       <li>
-        Cryptos:{" "}
-        <span className={`text-blue-700 dark:text-blue-500`}>
-          {data?.active_cryptocurrencies}
-        </span>
+        Cryptos: <span className={`text-blue-700 dark:text-blue-500`}>{data?.active_cryptocurrencies}</span>
       </li>
       <li>
         Exchanges:{" "}
@@ -43,7 +25,7 @@ export const TopNav = () => {
       <li>
         Market Cap:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
-          {data?.total_market_cap?.usd &&
+          {data?.total_market_cap.usd &&
             Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -53,7 +35,7 @@ export const TopNav = () => {
       <li>
         Total Volume:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
-          {data?.total_volume?.usd &&
+          {data?.total_volume.usd &&
             Intl.NumberFormat("en-US", {
               style: "currency",
               currency: "USD",
@@ -64,10 +46,10 @@ export const TopNav = () => {
         Dominance:{" "}
         <span className={`text-blue-700 dark:text-blue-500`}>
           BTC:{" "}
-          {data?.market_cap_percentage?.btc &&
+          {data?.market_cap_percentage.btc &&
             Math.round(data.market_cap_percentage.btc * 100) / 100}
           %, ETH:{" "}
-          {data?.market_cap_percentage?.eth &&
+          {data?.market_cap_percentage.eth &&
             Math.round(data.market_cap_percentage.eth * 100) / 100}
           %
         </span>

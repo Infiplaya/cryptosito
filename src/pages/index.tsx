@@ -1,56 +1,20 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import FilterableCryptoTable from "../components/Tables/FilterableCryptoTable";
 import TodayCrypto from "../components/TodayCrypto";
 import Trending from "../components/Cards/Trending";
+import { trpc } from "../utils/trpc";
 import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
 import Loader from "../components/Loader";
-import { Crypto } from "../types/crypto";
-import { GlobalInfo } from "../types/global-info";
-import { RecentData } from "../types/recent-data";
-import { TrendingData } from "../types/trending";
 
-interface Props {
-  cryptoData: Crypto[]
-  globalInfo: GlobalInfo,
-  recentData: RecentData[],
-  trendingData: TrendingData
-}
-
-export const getServerSideProps:GetServerSideProps<Props> = async () =>  {
-  // Fetch data about cryptos
-  const res1 = await fetch(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"
-  );
-  const cryptoData = await res1.json();
-
-  // Fetch data about globalInfo
-  const res2 = await fetch("https://api.coingecko.com/api/v3/global");
-  const globalInfo = await res2.json();
-
-  // Fetch data about recent coins
-  const res3 = await fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_asc&per_page=3&page=1&sparkline=false")
-  const recentData = await res3.json();
-
-  // Fetch data about trending coins
-  const res4 = await fetch("https://api.coingecko.com/api/v3/search/trending");
-  const trendingData = await res4.json();
-
-  // Return the data as props
-  return {
-    props: {
-      cryptoData,
-      globalInfo,
-      recentData,
-      trendingData
-    },
-  };
-}
-
-const Home: NextPage<Props> = ({ cryptoData, globalInfo, recentData, trendingData }) => {
+const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
+  const { data: cryptoData } = trpc.cryptos.getCryptos.useQuery();
+  const { data: globalInfo } = trpc.globalInfo.getGlobal.useQuery();
+  const { data: recentData } = trpc.recent.getRecent.useQuery();
+  const { data: trendingData } = trpc.trending.getTrending.useQuery();
 
   if (!globalInfo || !cryptoData || !recentData || !trendingData) {
     return (
