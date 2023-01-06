@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { CryptoData } from "../../server/trpc/router/cryptos";
+import { trpc } from "../../utils/trpc";
 import { CoinItem } from "./CoinItem";
-
 
 type Data = CryptoData;
 
@@ -21,7 +21,7 @@ function sortData({
   if (!sortKey) return tableData;
 
   const sortedData = tableData.sort((a, b) => {
-    return a[sortKey]!  > b[sortKey]! ? 1 : -1;
+    return a[sortKey]! > b[sortKey]! ? 1 : -1;
   });
 
   if (reverse) {
@@ -57,6 +57,12 @@ export function CryptoTable({
   const [searchText, setSearchText] = useState("");
   const [sortKey, setSortKey] = useState<SortKeys>("market_cap_rank");
   const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
+
+  const {data: watchlistData} = trpc.watchlist.getAll.useQuery();
+
+  const coinsNames = watchlistData?.map((coin:any) => coin.name)
+
+  console.log(coinsNames)
 
   function hideRows(key: string) {
     if (key === "total_volume" || key === "market_cap") {
@@ -143,7 +149,7 @@ export function CryptoTable({
                 }
               })
               .map((coin) => (
-                <CoinItem coin={coin} key={coin.id} />
+                <CoinItem coin={coin} key={coin.id} isSaved={coinsNames?.includes(coin.name)} />
               ))}
           </tbody>
         </table>

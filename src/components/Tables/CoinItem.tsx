@@ -4,7 +4,7 @@ import { faStar as outlineStar } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { z } from "zod";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 import { trpc } from "../../utils/trpc";
 import { useSession } from "next-auth/react";
@@ -29,8 +29,16 @@ const coinSchema = z.object({
 
 type Coin = z.infer<typeof coinSchema>;
 
-export const CoinItem = ({ coin }: { coin: Coin }) => {
+export const CoinItem = ({ coin, isSaved }: { coin: Coin, isSaved: boolean | undefined }) => {
   const [savedCoin, setSavedCoin] = useState(false);
+
+  
+
+  useEffect(() => {
+    if (isSaved) {
+      setSavedCoin(true)
+    }
+  }, [isSaved])
 
   const utils = trpc.useContext();
   const { data: session } = useSession();
@@ -144,7 +152,12 @@ export const CoinItem = ({ coin }: { coin: Coin }) => {
       <td className="hidden w-52 py-4 px-6 md:table-cell">
         <Sparklines data={coin.sparkline_in_7d.price}>
           <SparklinesLine
-            color={coin.price_change_percentage_24h && coin.price_change_percentage_24h> 0 ? "teal" : "red"}
+            color={
+              coin.price_change_percentage_24h &&
+              coin.price_change_percentage_24h > 0
+                ? "teal"
+                : "red"
+            }
           />
         </Sparklines>
       </td>
