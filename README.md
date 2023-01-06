@@ -49,6 +49,6 @@ npm run dev
 Feel free to tell me what can I add or improve! I am still learning web development, and I realize that this app is not perfect. Feedback is greatly appreciated. 
 
 ## Todo
-- improve redirecting when no session
-- style the community
+- reduce initial response time
+- set initial state to icon stars to watchlist
 - ?? 

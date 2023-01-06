@@ -1,24 +1,45 @@
-import type { NextPage } from "next";
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetStaticProps,
+  GetStaticPropsContext,
+  NextPage,
+} from "next";
 import Head from "next/head";
-import { trpc } from "../../../utils/trpc";
-import { useRouter } from "next/router";
 import Loader from "../../../components/Loader";
 import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinInfo } from "../../../components/CoinInfo";
 import { Sparklines, SparklinesLine } from "react-sparklines";
+import { CoinData } from "../../../types/coin";
 
-const Coin: NextPage = () => {
-  const router = useRouter();
-  const id = router.query["id"];
-  const { data: getCoin } = trpc.coin.getCoin.useQuery({ name: id });
+interface Props {
+  getCoin: CoinData;
+}
 
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context: GetServerSidePropsContext
+) => {
+  // Fetch data about coin
+  const res1 = await fetch(
+    `https://api.coingecko.com/api/v3/coins/${context.params?.query}?sparkline=true`
+  );
+  const getCoin = await res1.json();
+
+  // Return the data as props
+  return {
+    props: {
+      getCoin,
+    },
+  };
+};
+
+const Coin: NextPage<Props> = ({ getCoin }) => {
   if (!getCoin)
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Loader />
       </div>
     );
-
 
   return (
     <>
@@ -38,7 +59,8 @@ const Coin: NextPage = () => {
               <Sparklines data={getCoin.market_data.sparkline_7d.price}>
                 <SparklinesLine
                   color={
-                    getCoin.market_data.price_change_percentage_24h && getCoin.market_data.price_change_percentage_24h > 0
+                    getCoin.market_data.price_change_percentage_24h &&
+                    getCoin.market_data.price_change_percentage_24h > 0
                       ? "teal"
                       : "red"
                   }

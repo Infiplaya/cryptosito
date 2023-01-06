@@ -2,19 +2,18 @@ import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { RouterOutput } from "../server/trpc/router";
 import { trpc } from "../utils/trpc";
 import Loader from "./Loader";
-type GetCoinOutput = RouterOutput["coin"]["getCoin"];
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { CoinData } from "../types/coin";
 
 type FormValues = {
   quantity: number;
 };
 
-export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
+export const CoinInfo: React.FC<{ getCoin: CoinData }> = ({ getCoin }) => {
   const [value, setValue] = useState<string>("");
   const [success, setSuccess] = useState("");
 
@@ -234,7 +233,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
               <p className="mt-3">
                 Estimated Cost:{" "}
                 {value != ""
-                  ? getCoin.market_data?.current_price &&
+                  ? getCoin.market_data.current_price.usd &&
                     parseFloat(value) * getCoin.market_data?.current_price.usd
                   : ""}
                 $
