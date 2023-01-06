@@ -2,14 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider             = "mysql"
-  url                  = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model Example {
@@ -107,6 +106,8 @@ model Tweet {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   likes     Like[]
+
+  @@index([authorId])
 }
 
 model Like {
@@ -122,4 +123,5 @@ model Like {
   updatedAt DateTime @updatedAt
 
   @@unique([tweetId, userId])
+  @@index([userId])
 }
