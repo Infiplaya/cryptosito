@@ -1,8 +1,6 @@
 import type {
   GetServerSideProps,
   GetServerSidePropsContext,
-  GetStaticProps,
-  GetStaticPropsContext,
   NextPage,
 } from "next";
 import Head from "next/head";

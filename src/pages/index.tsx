@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import FilterableCryptoTable from "../components/Tables/FilterableCryptoTable";
@@ -19,7 +19,7 @@ interface Props {
   trendingData: TrendingData
 }
 
-export const getStaticProps:GetStaticProps<Props> = async () =>  {
+export const getServerSideProps:GetServerSideProps<Props> = async () =>  {
   // Fetch data about cryptos
   const res1 = await fetch(
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d"

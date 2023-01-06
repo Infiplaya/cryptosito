@@ -1,19 +1,38 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import { trpc } from "../../utils/trpc";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+
 
 export const TopNav = () => {
+  const [data, setData] = useState<any>();
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
 
-  const data:any = "ss"
+  useEffect(() => {
+    // fetch data
+    const dataFetch = async () => {
+      const data = await (
+        await fetch(
+          "https://api.coingecko.com/api/v3/global"
+        )
+      ).json();
+
+      // set state when the data received
+      setData(data);
+    };
+
+    dataFetch();
+  }, []);
 
   return (
     <ul className="container flex h-12 gap-5 px-16 text-xs font-semibold text-gray-600 dark:text-gray-400 md:items-center">
       <li>
-        Cryptos: <span className={`text-blue-700 dark:text-blue-500`}>{data?.active_cryptocurrencies}</span>
+        Cryptos:{" "}
+        <span className={`text-blue-700 dark:text-blue-500`}>
+          {data?.active_cryptocurrencies}
+        </span>
       </li>
       <li>
         Exchanges:{" "}
