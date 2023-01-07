@@ -6,9 +6,42 @@ import TodayCrypto from "../components/TodayCrypto";
 import Trending from "../components/Cards/Trending";
 import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
+import superjson from "superjson";
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
+import { cryptosRouter } from "../server/trpc/router/cryptos";
+import { trpc } from "../utils/trpc";
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  const ssg = await createProxySSGHelpers({
+    router: cryptosRouter,
+    ctx: {} as any,
+    transformer: superjson, // optional - adds superjson serialization
+  });
+
+  await ssg.getCryptos.prefetch();
+
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+    },
+    revalidate: 30,
+  };
+}
+
+const Home: NextPage<typeof getStaticProps> = (props) => {
   const [enabled, setEnabled] = useState(true);
+  const cryptoQuery = trpc.cryptos.getCryptos.useQuery();
+
+  if (cryptoQuery.status !== "success") {
+    return <>Loading...</>;
+  }
+
+  const { data: cryptoData } = cryptoQuery;
 
   return (
     <>
@@ -25,7 +58,7 @@ const Home: NextPage = () => {
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
         {enabled ? <Trending /> : null}
-        {<FilterableCryptoTable />}
+        <FilterableCryptoTable cryptoData={cryptoData} />
       </main>
     </>
   );

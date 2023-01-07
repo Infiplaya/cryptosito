@@ -5,24 +5,14 @@ import Pagination from "../Pagination";
 import { memo } from "react";
 import { trpc } from "../../utils/trpc";
 import Loader from "../Loader";
+import { CryptoData } from "../../server/trpc/router/cryptos";
 
-export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
+export const FilterableCryptoTable: React.FC<{ cryptoData: CryptoData }> = ({
+  cryptoData,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
   const [searchText, setSearchText] = useState("");
-  const [cryptoData, setCryptoData] = useState<any>();
-
-  const cryptos = trpc.cryptos.getCryptos.useQuery(undefined, {
-    enabled: false,
-  });
-
-  useEffect(() => {
-    cryptos.refetch();
-    setCryptoData(cryptos.data);
-  }, [cryptos]);
-  if (!cryptoData) {
-    return <Loader />;
-  }
 
   const handleCoinsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -71,4 +61,4 @@ export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
       </div>
     </div>
   );
-});
+};
