@@ -101,7 +101,7 @@ export function CryptoTable({
 
   return (
     <div>
-      <div className="relative mt-5 overflow-x-auto">
+      <div className="relative mt-2 overflow-x-auto">
         <table className="w-full text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>

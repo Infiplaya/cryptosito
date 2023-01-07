@@ -15,7 +15,7 @@ export const FilterOptionsBar: React.FC<Props> = ({
   setSearchText,
 }) => {
   return (
-    <div className="mt-10 flex w-full gap-3 p-3 text-xs font-bold text-gray-800 dark:text-gray-200">
+    <div className="mt-10 flex w-full gap-3 p-3 text-xs font-semibold text-gray-800 dark:text-gray-200">
       <div className="mr-5">
         <form>
           <input
@@ -32,8 +32,13 @@ export const FilterOptionsBar: React.FC<Props> = ({
       <GrayButton>
         <Link href={`/portfolio`}>Portfolio</Link>
       </GrayButton>
-      <div className="mr-5 ml-auto flex align-middle">
-        <p>Show rows</p>
+      <div className="mr-5 flex ml-auto items-center align-baseline">
+        <label
+          htmlFor="countries"
+          className="block text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Show rows
+        </label>
         <select
           id="rows"
           onChange={handleCoinsPerPageChange}

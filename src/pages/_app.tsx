@@ -9,7 +9,13 @@ import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CS
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "../components/Footer";
 import Header from "../components/Header/Header";
+import { Inter } from "@next/font/google";
+
 config.autoAddCss = false;
+
+const inter = Inter({
+  variable: "--font-inter",
+});
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -18,9 +24,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
+        <main className={inter.className}>
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
+        </main>
       </ThemeProvider>
     </SessionProvider>
   );
