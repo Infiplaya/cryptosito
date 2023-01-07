@@ -25,6 +25,7 @@ const Home: NextPage = () => {
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
         {enabled ? <Trending /> : null}
+        {<FilterableCryptoTable />}
       </main>
     </>
   );
