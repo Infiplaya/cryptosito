@@ -4,25 +4,11 @@ import { useState } from "react";
 import { FilterableCryptoTable } from "../components/Tables/FilterableCryptoTable";
 import TodayCrypto from "../components/TodayCrypto";
 import Trending from "../components/Cards/Trending";
-import { trpc } from "../utils/trpc";
 import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
-import Loader from "../components/Loader";
 
 const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
-  const { data: cryptoData } = trpc.cryptos.getCryptos.useQuery();
-  const { data: globalInfo } = trpc.globalInfo.getGlobal.useQuery();
-  const { data: recentData } = trpc.recent.getRecent.useQuery();
-  const { data: trendingData } = trpc.trending.getTrending.useQuery();
-
-  if (!globalInfo || !cryptoData || !recentData || !trendingData) {
-    return (
-      <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
-        <Loader />
-      </main>
-    );
-  }
 
   return (
     <>
@@ -32,16 +18,14 @@ const Home: NextPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="mx-auto flex min-h-screen w-screen flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
+      <main className="mx-auto flex flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
         <GradientBg />
         <div className="flex w-full gap-3 align-middle">
-          <TodayCrypto globalInfo={globalInfo} />
+          <TodayCrypto />
           <Highlights enabled={enabled} setEnabled={setEnabled} />
         </div>
-        {enabled ? (
-          <Trending recentData={recentData} trendingData={trendingData} />
-        ) : null}
-        {<FilterableCryptoTable cryptoData={cryptoData} />}
+        {enabled ? <Trending /> : null}
+        {<FilterableCryptoTable />}
       </main>
     </>
   );

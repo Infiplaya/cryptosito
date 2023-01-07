@@ -2,19 +2,21 @@ import { FilterOptionsBar } from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
 import React, { useState } from "react";
 import Pagination from "../Pagination";
-import { CryptoData } from "../../server/trpc/router/cryptos";
 import { memo } from "react";
+import { trpc } from "../../utils/trpc";
+import Loader from "../Loader";
 
-interface Props {
-  cryptoData: CryptoData;
-}
 
-export const FilterableCryptoTable = memo(function FilterableCryptoTable({
-  cryptoData,
-}: Props) {
+export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
   const [searchText, setSearchText] = useState("");
+
+  const { data: cryptoData } = trpc.cryptos.getCryptos.useQuery();
+
+  if (!cryptoData) {
+    return <Loader />;
+  }
 
   const handleCoinsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -41,7 +43,7 @@ export const FilterableCryptoTable = memo(function FilterableCryptoTable({
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />
-        <div className="md:ml-10 mt-5 gap-3 flex align-middle">
+        <div className="mt-5 flex gap-3 align-middle md:ml-10">
           <label
             htmlFor="rows"
             className="block text-sm font-medium text-gray-900 dark:text-white"

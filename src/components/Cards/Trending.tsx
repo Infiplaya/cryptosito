@@ -1,19 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import "keen-slider/keen-slider.min.css";
 import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
 import { CommunityPostCard } from "./CommunityPostCard";
-import Loader from "../Loader";
-import { RecentData, TrendingData } from "../../server/trpc/router/cryptos";
+import { trpc } from "../../utils/trpc";
 
-const Trending = ({
-  trendingData,
-  recentData,
-}: {
-  trendingData: TrendingData;
-  recentData: RecentData;
-}) => {
+const Trending = () => {
+  const { data: recentData } = trpc.recent.getRecent.useQuery();
+  const { data: trendingData } = trpc.trending.getTrending.useQuery();
   const coins = trendingData?.coins.map((coin) => coin.item);
 
   const recentCoins = recentData?.map((coin) => (
@@ -36,9 +30,13 @@ const Trending = ({
 
   return (
     <div className="container mx-auto mt-10 hidden gap-5 md:flex lg:h-48">
-      {coins ? <TrendingCard coins={coins} /> : <div>Loading...</div>}
-      {recentCoins ? <RecentCard recentCoins={recentCoins} /> : <Loader />}
-      <CommunityPostCard />
+      {coins && recentCoins && (
+        <>
+          <TrendingCard coins={coins} />
+          <RecentCard recentCoins={recentCoins} />
+          <CommunityPostCard />
+        </>
+      )}
     </div>
   );
 };
