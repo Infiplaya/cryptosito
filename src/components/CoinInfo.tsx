@@ -68,7 +68,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
     },
 
     onSuccess: () => {
-      setSuccess("You bought a coin!");
+      setSuccess("You bought a coin! Check your portfolio for more info");
     },
   });
 
