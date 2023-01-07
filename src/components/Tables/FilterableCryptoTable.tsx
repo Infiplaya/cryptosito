@@ -6,7 +6,6 @@ import { memo } from "react";
 import { trpc } from "../../utils/trpc";
 import Loader from "../Loader";
 
-
 export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
@@ -36,14 +35,14 @@ export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
         setSearchText={setSearchText}
       />
       <CryptoTable cryptoData={currentCoins} searchText={searchText} />
-      <div className="mt-5 flex w-full">
+      <div className="mt-5 flex w-full flex-col md:flex-row">
         <Pagination
           totalCoins={cryptoData.length}
           coinsPerPage={coinsPerPage}
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />
-        <div className="mt-5 flex gap-3 align-middle md:ml-10">
+        <div className="mt-5 ml-5 block gap-3 align-middle md:ml-10 md:flex">
           <label
             htmlFor="rows"
             className="block text-sm font-medium text-gray-900 dark:text-white"
@@ -54,7 +53,7 @@ export const FilterableCryptoTable = memo(function FilterableCryptoTable({}) {
             id="rows"
             onChange={handleCoinsPerPageChange}
             value={coinsPerPage}
-            className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+            className="block rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
           >
             <option value={10}>10</option>
             <option value={20}>20</option>
