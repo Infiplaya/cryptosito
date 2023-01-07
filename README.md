@@ -49,6 +49,7 @@ npm run dev
 Feel free to tell me what can I add or improve! I am still learning web development, and I realize that this app is not perfect. Feedback is greatly appreciated. 
 
 ## Todo
-- reduce initial response time
-- set initial state to icon stars to watchlist
-- add more filters 
+- reduce initial response time - kinda done
+- set initial state to icon stars to watchlist - DONE
+- add more filters
+- add feature to edit and delete your posts
