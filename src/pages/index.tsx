@@ -8,11 +8,6 @@ import { GradientBg } from "../components/GradientBg";
 import { Highlights } from "../components/Highlights";
 import superjson from "superjson";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
-import {
-  GetStaticPaths,
-  GetStaticPropsContext,
-  InferGetStaticPropsType,
-} from "next";
 import { cryptosRouter } from "../server/trpc/router/cryptos";
 import { trpc } from "../utils/trpc";
 
@@ -29,7 +24,7 @@ export async function getStaticProps() {
     props: {
       trpcState: ssg.dehydrate(),
     },
-    revalidate: 30,
+    revalidate: 300,
   };
 }
 
