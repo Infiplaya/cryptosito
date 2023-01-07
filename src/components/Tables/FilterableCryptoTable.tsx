@@ -41,7 +41,7 @@ export const FilterableCryptoTable = memo(function FilterableCryptoTable({
           setCurrentPage={setCurrentPage}
           currentPage={currentPage}
         />
-        <div className="mr-5 mt-5 gap-3 flex align-middle">
+        <div className="md:ml-10 mt-5 gap-3 flex align-middle">
           <label
             htmlFor="rows"
             className="block text-sm font-medium text-gray-900 dark:text-white"
