@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { CryptoData } from "../../server/trpc/router/cryptos";
 import { trpc } from "../../utils/trpc";
 import { CoinItem } from "./CoinItem";
+import { FilterOptionsBar } from "./FilterOptionsBar";
 
 type Data = CryptoData;
 
@@ -51,18 +52,17 @@ function SortButton({
 
 export function CryptoTable({
   cryptoData,
+  searchText,
 }: {
   cryptoData: CryptoData;
+  searchText: string;
 }): JSX.Element {
-  const [searchText, setSearchText] = useState("");
   const [sortKey, setSortKey] = useState<SortKeys>("market_cap_rank");
   const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
 
-  const {data: watchlistData} = trpc.watchlist.getAll.useQuery();
+  const { data: watchlistData } = trpc.watchlist.getAll.useQuery();
 
-  const coinsNames = watchlistData?.map((coin:any) => coin.name)
-
-  console.log(coinsNames)
+  const coinsNames = watchlistData?.map((coin: any) => coin.name);
 
   function hideRows(key: string) {
     if (key === "total_volume" || key === "market_cap") {
@@ -101,16 +101,6 @@ export function CryptoTable({
 
   return (
     <div>
-      <div className="mt-5">
-        <form className="mt-2">
-          <input
-            type="text"
-            onChange={(e) => setSearchText(e.target.value)}
-            placeholder="Search a coin"
-            className="block w-64 rounded-lg border border-gray-300 bg-gray-50 p-3 pl-5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          />
-        </form>
-      </div>
       <div className="relative mt-5 overflow-x-auto">
         <table className="w-full text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
@@ -149,7 +139,11 @@ export function CryptoTable({
                 }
               })
               .map((coin) => (
-                <CoinItem coin={coin} key={coin.id} isSaved={coinsNames?.includes(coin.name)} />
+                <CoinItem
+                  coin={coin}
+                  key={coin.id}
+                  isSaved={coinsNames?.includes(coin.name)}
+                />
               ))}
           </tbody>
         </table>

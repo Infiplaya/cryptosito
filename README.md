@@ -51,4 +51,4 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 ## Todo
 - reduce initial response time
 - set initial state to icon stars to watchlist
-- ?? 
+- add more filters 

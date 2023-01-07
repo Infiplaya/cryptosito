@@ -32,45 +32,39 @@ const Pagination = ({
   };
 
   return (
-    <nav className="flex w-full justify-center">
-      <ul className="mt-5 flex gap-2">
-        <li>
+    <nav className="flex w-full">
+      <ul className="mt-5 flex w-full justify-center px-10">
+        <li className="hidden rounded-lg p-2 md:list-item mr-auto">
+          Page {currentPage} of {totalPages}
+        </li>
+        <li className="mt-3 text-sm md:hidden">
+          {currentPage} / {totalPages}
+        </li>
+        <li className="flex gap-3">
           <button
             onClick={handleFirstClick}
-            className="rounded-lg p-2 shadow dark:bg-gray-700"
+            className="rounded-lg px-3 py-2 shadow dark:bg-gray-700"
             disabled={currentPage === 1}
           >
             {"<<<"}
           </button>
-        </li>
-        <li>
           <button
             onClick={handlePrevClick}
-            className="rounded-lg p-2 shadow dark:bg-gray-700"
+            className="rounded-lg px-3 py-2 shadow dark:bg-gray-700"
             disabled={currentPage === 1}
           >
             {"<"}
           </button>
-        </li>
-        <li className="rounded-lg p-2 hidden md:list-item">
-          Page {currentPage} of {totalPages}
-        </li>
-        <li className="text-sm md:hidden mt-3">
-          {currentPage} / {totalPages}
-        </li>
-        <li>
           <button
             onClick={handleNextClick}
-            className="rounded-lg p-2 shadow dark:bg-gray-700"
+            className="rounded-lg px-3 py-2 shadow dark:bg-gray-700"
             disabled={currentPage === totalPages}
           >
             {">"}
           </button>
-        </li>
-        <li>
           <button
             onClick={handleLastClick}
-            className="rounded-lg p-2 shadow dark:bg-gray-700"
+            className="rounded-lg px-3 py-2 shadow dark:bg-gray-700"
             disabled={currentPage === totalPages}
           >
             {">>>"}
