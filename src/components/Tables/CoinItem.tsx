@@ -29,19 +29,24 @@ const coinSchema = z.object({
 
 type Coin = z.infer<typeof coinSchema>;
 
-export const CoinItem = ({ coin, isSaved }: { coin: Coin, isSaved: boolean | undefined }) => {
+export const CoinItem = ({
+  coin,
+  isSaved,
+}: {
+  coin: Coin;
+  isSaved: boolean | undefined;
+}) => {
   const [savedCoin, setSavedCoin] = useState(false);
 
-  
+  const { data: session } = useSession();
 
   useEffect(() => {
-    if (isSaved) {
-      setSavedCoin(true)
+    if (isSaved && session) {
+      setSavedCoin(true);
     }
-  }, [isSaved])
+  }, [isSaved, session]);
 
   const utils = trpc.useContext();
-  const { data: session } = useSession();
 
   const addCoin = trpc.watchlist.addToWatchlist.useMutation({
     onMutate: () => {
