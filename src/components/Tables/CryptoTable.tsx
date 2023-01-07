@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { CryptoData } from "../../server/trpc/router/cryptos";
 import { trpc } from "../../utils/trpc";
 import { CoinItem } from "./CoinItem";

@@ -3,16 +3,21 @@ import { CryptoTable } from "./CryptoTable";
 import React, { useState } from "react";
 import Pagination from "../Pagination";
 import { CryptoData } from "../../server/trpc/router/cryptos";
+import { memo } from "react";
 
 interface Props {
   cryptoData: CryptoData;
 }
 
-export default function FilterableCryptoTable({ cryptoData }: Props) {
+export const FilterableCryptoTable = memo(function FilterableCryptoTable({
+  cryptoData,
+}: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
 
-  const handleCoinsPerPageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleCoinsPerPageChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setCoinsPerPage(parseInt(event.target.value));
   };
 
@@ -53,4 +58,4 @@ export default function FilterableCryptoTable({ cryptoData }: Props) {
       </div>
     </div>
   );
-}
+});

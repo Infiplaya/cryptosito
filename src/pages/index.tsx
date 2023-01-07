@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import FilterableCryptoTable from "../components/Tables/FilterableCryptoTable";
+import { FilterableCryptoTable } from "../components/Tables/FilterableCryptoTable";
 import TodayCrypto from "../components/TodayCrypto";
 import Trending from "../components/Cards/Trending";
 import { trpc } from "../utils/trpc";
