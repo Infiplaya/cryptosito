@@ -1,15 +1,27 @@
 import { FilterOptionsBar } from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
-import React, {  useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
-import { CryptoData } from "../../server/trpc/router/cryptos";
+import { trpc } from "../../utils/trpc";
+import Loader from "../Loader";
 
-export const FilterableCryptoTable: React.FC<{ cryptoData: CryptoData }> = ({
-  cryptoData,
-}) => {
+export const FilterableCryptoTable = function FilterableCryptoTable() {
   const [currentPage, setCurrentPage] = useState(1);
   const [coinsPerPage, setCoinsPerPage] = useState(50);
   const [searchText, setSearchText] = useState("");
+  const [cryptoData, setCryptoData] = useState<any>();
+
+  const cryptos = trpc.cryptos.getCryptos.useQuery(undefined, {
+    enabled: false,
+  });
+
+  useEffect(() => {
+    cryptos.refetch();
+    setCryptoData(cryptos.data);
+  }, [cryptos]);
+  if (!cryptoData) {
+    return <Loader />;
+  }
 
   const handleCoinsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
