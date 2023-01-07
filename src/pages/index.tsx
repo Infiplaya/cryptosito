@@ -10,6 +10,7 @@ import superjson from "superjson";
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { cryptosRouter } from "../server/trpc/router/cryptos";
 import { trpc } from "../utils/trpc";
+import Loader from "../components/Loader";
 
 export async function getStaticProps() {
   const ssg = await createProxySSGHelpers({
@@ -28,12 +29,12 @@ export async function getStaticProps() {
   };
 }
 
-const Home: NextPage<typeof getStaticProps> = (props) => {
+const Home: NextPage<typeof getStaticProps> = () => {
   const [enabled, setEnabled] = useState(true);
   const cryptoQuery = trpc.cryptos.getCryptos.useQuery();
 
   if (cryptoQuery.status !== "success") {
-    return <>Loading...</>;
+    return <Loader />;
   }
 
   const { data: cryptoData } = cryptoQuery;

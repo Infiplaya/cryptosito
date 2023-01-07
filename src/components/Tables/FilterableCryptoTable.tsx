@@ -1,10 +1,7 @@
 import { FilterOptionsBar } from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Pagination from "../Pagination";
-import { memo } from "react";
-import { trpc } from "../../utils/trpc";
-import Loader from "../Loader";
 import { CryptoData } from "../../server/trpc/router/cryptos";
 
 export const FilterableCryptoTable: React.FC<{ cryptoData: CryptoData }> = ({
