@@ -15,8 +15,8 @@ export const FilterOptionsBar: React.FC<Props> = ({
   setSearchText,
 }) => {
   return (
-    <div className="mt-10 flex w-full gap-3 p-3 text-xs font-semibold text-gray-800 dark:text-gray-200">
-      <div className="mr-5">
+    <div className="mt-10 flex gap-3 p-3 text-xs font-semibold text-gray-800 dark:text-gray-200">
+      <div className="mr-5 hidden md:block">
         <form>
           <input
             type="text"

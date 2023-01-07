@@ -82,7 +82,7 @@ export const CoinItem = ({
   };
 
   return (
-    <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800">
+    <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-100/5 hover:dark:bg-blue-100/5">
       <td className="py-4 px-6" onClick={session ? handleAddCoin : handleAlert}>
         <FontAwesomeIcon
           icon={savedCoin ? faStar : outlineStar}
@@ -92,7 +92,7 @@ export const CoinItem = ({
       </td>
       <td className="py-4 px-6">{coin.market_cap_rank}</td>
       <td className="py-4 px-6">
-        <Link href={`/currencies/${coin.id}`}>
+        <a href={`/currencies/${coin.id}`}>
           <div className="flex items-center gap-1">
             <Image
               className="mr-2 w-6 rounded-full"
@@ -106,7 +106,7 @@ export const CoinItem = ({
             </p>
             <p>{coin.symbol?.toUpperCase()}</p>
           </div>
-        </Link>
+        </a>
       </td>
       <td className="py-4 px-6">${coin.current_price.toLocaleString()}</td>
       <td

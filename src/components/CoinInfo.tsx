@@ -132,13 +132,13 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
                   rank: getCoin.market_cap_rank as number,
                   userId: session.user?.id,
                   price: getCoin.market_data?.current_price.usd,
-                  price_change_percentage_24h:
-                    getCoin.market_data?.price_change_percentage_24h as number,
-                  price_change_percentage_7d:
-                    getCoin.market_data?.price_change_percentage_7d as number,
-                  price_change_percentage_14d:
-                    getCoin.market_data?.price_change_percentage_14d as number,
-                  total_volume: getCoin.market_data?.total_volume.usd,
+                  price_change_percentage_24h: getCoin.market_data
+                    ?.price_change_percentage_24h as number,
+                  price_change_percentage_7d: getCoin.market_data
+                    ?.price_change_percentage_7d as number,
+                  price_change_percentage_14d: getCoin.market_data
+                    ?.price_change_percentage_14d as number,
+                  total_volume: getCoin.market_data?.total_volume.usd as number,
                 });
               }}
             >
