@@ -89,7 +89,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
     );
 
   return (
-    <div className="flex flex-col gap-5 md:grid md:grid-cols-3">
+    <div className="flex flex-col md:grid md:grid-cols-3">
       <div>
         <div className="flex gap-3">
           <Image
@@ -157,65 +157,9 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
         )}
       </div>
       <div>
-        <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-          {getCoin.name} Price ({getCoin.symbol.toUpperCase()})
-        </p>
-        <div className="flex items-center gap-3 align-middle">
-          <p className="text-3xl font-bold antialiased">
-            {getCoin.market_data?.current_price.usd &&
-              dollar.format(getCoin.market_data.current_price.usd)}
-          </p>
-          <button
-            disabled
-            className={
-              getCoin.market_data?.price_change_percentage_24h &&
-              getCoin.market_data?.price_change_percentage_24h > 0
-                ? `rounded bg-green-500  px-2 py-1 text-gray-50`
-                : `rounded bg-red-500 px-2 py-1 text-gray-50`
-            }
-          >
-            {getCoin.market_data?.price_change_percentage_24h &&
-              Math.round(
-                getCoin.market_data.price_change_percentage_24h * 100
-              ) / 100}
-            %
-          </button>
-        </div>
-        <p className="mt-5">
-          Market Cap:{" "}
-          <span>
-            {getCoin.market_data?.market_cap.usd
-              ? dollar.format(getCoin.market_data.market_cap.usd)
-              : "No data"}
-          </span>
-        </p>
-        <p>
-          Fully Diluted Market Cap:{" "}
-          <span>
-            {getCoin.market_data?.fully_diluted_valuation.usd
-              ? dollar.format(getCoin.market_data.fully_diluted_valuation.usd)
-              : "No data"}
-          </span>
-        </p>
-        <p>
-          Volume 24h:{" "}
-          <span>
-            {getCoin.market_data?.high_24h.usd
-              ? dollar.format(getCoin.market_data.high_24h.usd)
-              : "No data"}
-          </span>
-        </p>
-        Circulating supply:{" "}
-        <span>
-          {getCoin.market_data?.circulating_supply
-            ? dollar.format(getCoin.market_data.circulating_supply)
-            : "No data"}
-        </span>
-      </div>
-      <div>
         {session ? (
           <>
-            <h1 className="text-3xl font-bold">Buy a coin</h1>
+            <h1 className="text-3xl font-bold mt-10 md:mt-0">Buy a coin</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
               <input
                 className="mt-1 rounded-lg p-3"
@@ -250,6 +194,65 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
             Want to buy some? Sign in!
           </h1>
         )}
+      </div>
+      <div>
+        <p className="text-3xl mt-10 md:mt-0 font-bold text-gray-700 dark:text-gray-300">
+          {getCoin.name} Price ({getCoin.symbol.toUpperCase()})
+        </p>
+        <div className="flex items-center gap-3 align-middle">
+          <p className="text-3xl font-bold antialiased">
+            {getCoin.market_data?.current_price.usd &&
+              dollar.format(getCoin.market_data.current_price.usd)}
+          </p>
+          <button
+            disabled
+            className={
+              getCoin.market_data?.price_change_percentage_24h &&
+              getCoin.market_data?.price_change_percentage_24h > 0
+                ? `rounded bg-green-500  px-2 py-1 text-gray-50`
+                : `rounded bg-red-500 px-2 py-1 text-gray-50`
+            }
+          >
+            {getCoin.market_data?.price_change_percentage_24h &&
+              Math.round(
+                getCoin.market_data.price_change_percentage_24h * 100
+              ) / 100}
+            %
+          </button>
+        </div>
+        <p className="mt-5 rounded-lg p-3 shadow-md dark:shadow-gray-700">
+          Market Cap:{" "}
+          <span className="text-xl font-bold">
+            {getCoin.market_data?.market_cap.usd
+              ? dollar.format(getCoin.market_data.market_cap.usd)
+              : "No data"}
+          </span>
+        </p>
+        <p className="mt-5 rounded-lg p-3 shadow-md dark:shadow-gray-700">
+          Fully Diluted Market Cap:{" "}
+          <span className="text-xl font-bold">
+            {getCoin.market_data?.fully_diluted_valuation.usd
+              ? dollar.format(getCoin.market_data.fully_diluted_valuation.usd)
+              : "No data"}
+          </span>
+        </p>
+        <p className="mt-5 rounded-lg p-3 shadow-md dark:shadow-gray-700">
+          Volume 24h:{" "}
+          <span className="text-xl font-bold">
+            {getCoin.market_data?.high_24h.usd
+              ? dollar.format(getCoin.market_data.high_24h.usd)
+              : "No data"}
+          </span>
+        </p>
+        <p className="mt-5 rounded-lg p-3 shadow-md dark:shadow-gray-700 ">
+          {" "}
+          Circulating supply:{" "}
+          <span className="text-xl font-bold">
+            {getCoin.market_data?.circulating_supply
+              ? dollar.format(getCoin.market_data.circulating_supply)
+              : "No data"}
+          </span>
+        </p>
       </div>
     </div>
   );

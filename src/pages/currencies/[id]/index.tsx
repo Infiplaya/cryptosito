@@ -31,7 +31,7 @@ const Coin: NextPage = () => {
         <div>
           <CoinInfo getCoin={getCoin} />
           {getCoin.market_data?.sparkline_7d ? (
-            <div className="mt-20 md:w-1/2">
+            <div className="mt-10 md:mt-0 md:w-1/2">
               <h3 className="mb-10 text-2xl font-bold">
                 {getCoin.name} to USD chart
               </h3>
