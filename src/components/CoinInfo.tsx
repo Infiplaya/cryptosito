@@ -179,7 +179,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
                 Estimated Cost:{" "}
                 {value != ""
                   ? getCoin.market_data?.current_price &&
-                    parseFloat(value) * getCoin.market_data?.current_price.usd
+                    (parseFloat(value) * getCoin.market_data?.current_price.usd).toFixed(2)
                   : ""}
                 $
               </p>

@@ -1,5 +1,6 @@
 import { router, publicProcedure, protectedProcedure } from "../trpc";
 import { z } from 'zod';
+import { Input } from "postcss";
 
 
 const url = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=true&price_change_percentage=1h%2C24h%2C7d";
@@ -287,10 +288,13 @@ export const buyRouter = router({
     getAll: publicProcedure.query(async ({ ctx }) => {
       try {
         return await ctx.prisma.buyCoin.groupBy({
-          by: ["name", "price"],
+          by: ["name"],
+          where: {
+            userId: ctx.session?.user?.id
+          },
           _sum: {
             shares: true,
-          }
+          },
         });
       } catch (error) {
         console.log("error", error);

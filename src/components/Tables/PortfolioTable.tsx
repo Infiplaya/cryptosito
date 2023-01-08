@@ -3,21 +3,17 @@ import { trpc } from "../../utils/trpc";
 export const PortfolioTable = () => {
   const { data: boughtCoins, isLoading } = trpc.buyCoin.getAll.useQuery();
 
-  console.log(boughtCoins);
-
   if (isLoading) {
     return <div>Loading data...</div>;
   }
 
   return (
     <div className="overflow-x-auto text-gray-800 dark:text-gray-300">
-      <table className="table-auto text-sm font-semibold w-full">
+      <table className="w-full table-auto text-sm font-semibold">
         <thead>
           <tr className="text-base">
             <th className="px-6 py-4 text-left font-semibold">Name</th>
-            <th className="px-6 py-4 text-left font-semibold">Shares</th>
-            <th className="px-6 py-4 text-left font-semibold">Price</th>
-            <th className="px-6 py-4 text-left font-semibold">Total cost</th>
+            <th className="px-6 py-4 text-left font-semibold">Your shares</th>
           </tr>
         </thead>
         <tbody>
@@ -34,15 +30,6 @@ export const PortfolioTable = () => {
                 </td>
                 <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
                   {coin._sum.shares}
-                </td>
-                <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                  ${coin.price}
-                </td>
-                <td className="px-6 py-4 text-left font-semibold  text-slate-800 dark:text-slate-300">
-                  $
-                  {coin.price && coin._sum.shares
-                    ? coin.price * coin._sum.shares
-                    : "Null"}
                 </td>
               </tr>
             </>
