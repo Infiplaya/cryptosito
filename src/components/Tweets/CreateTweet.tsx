@@ -41,7 +41,7 @@ export function CreateTweet() {
   return (
     <div className="p-2">
       <p className="p-3 font-semibold text-red-500">{error && error}</p>
-      <p className="px-4 text-xl md:text-3xl font-semibold">What do you want to share?</p>
+      <p className="px-4 text-xl md:text-2xl font-semibold">What do you want to share?</p>
       <form
         onSubmit={handleSubmit}
         className="mb-4 mt-3 flex w-full flex-col rounded-md border border-gray-200 p-4 dark:border-gray-700"

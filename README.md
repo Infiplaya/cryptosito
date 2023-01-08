@@ -54,4 +54,4 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - add more filters
 - add feature to edit and delete your posts
 - better loading state - DONE
-- remove from watchlist from table level
+- remove from watchlist from table level - DONE
