@@ -12,8 +12,6 @@ export const FilterableCryptoTable = function FilterableCryptoTable() {
 
   const { data: cryptoData, isLoading } = trpc.cryptos.getCryptos.useQuery();
 
-
-
   const handleCoinsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {

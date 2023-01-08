@@ -53,4 +53,5 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - set initial state to icon stars to watchlist - DONE
 - add more filters
 - add feature to edit and delete your posts
-- better loading state
+- better loading state - DONE
+- remove from watchlist from table level

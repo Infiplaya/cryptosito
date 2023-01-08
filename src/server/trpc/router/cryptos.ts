@@ -241,7 +241,20 @@ export const watchlistRouter = router({
       })).mutation(async ({ctx, input}) => {
         await ctx.prisma.coin.delete({
           where: {
-            id: input.id,
+            id: input.id
+          }
+        })
+      }),
+      deleteFromTable: protectedProcedure
+      .input(z.object({
+        name: z.string(),
+      })).mutation(async ({ctx, input}) => {
+        await ctx.prisma.coin.delete({
+          where: {
+            userId_name: {
+              userId: ctx.session.user.id,
+              name: input.name
+            }
           }
         })
       }),

@@ -48,6 +48,10 @@ export const CoinItem = ({
 
   const utils = trpc.useContext();
 
+  const handleAlert = () => {
+    alert("Must be signed in to add to watchlist");
+  };
+
   const addCoin = trpc.watchlist.addToWatchlist.useMutation({
     onMutate: () => {
       utils.watchlist.getAll.cancel();
@@ -66,24 +70,51 @@ export const CoinItem = ({
   });
 
   const handleAddCoin = async () => {
+    session
+      ? addCoin.mutate({
+          name: coin.name,
+          rank: coin.market_cap_rank as number,
+          userId: session.user?.id,
+          price: coin.current_price,
+          price_change_percentage_24h:
+            coin.price_change_percentage_24h as number,
+          total_volume: coin.total_volume,
+        })
+      : handleAlert();
+  };
+
+  // Delete Coin from watchlist
+
+  const deleteCoin = trpc.watchlist.deleteFromTable.useMutation({
+    onMutate: () => {
+      utils.watchlist.getAll.cancel();
+      const optimisticUpdate = utils.watchlist.getAll.getData();
+
+      if (optimisticUpdate) {
+        utils.watchlist.getAll.setData(undefined, optimisticUpdate);
+      }
+    },
+    onSettled: () => {
+      utils.watchlist.getAll.invalidate();
+    },
+    onSuccess: () => {
+      setSavedCoin(false);
+    },
+  });
+
+  const handleDeleteCoin = async () => {
     session &&
-      addCoin.mutate({
+      deleteCoin.mutate({
         name: coin.name,
-        rank: coin.market_cap_rank as number,
-        userId: session.user?.id,
-        price: coin.current_price,
-        price_change_percentage_24h: coin.price_change_percentage_24h as number,
-        total_volume: coin.total_volume,
       });
   };
 
-  const handleAlert = () => {
-    alert("Must be signed in to add to watchlist");
-  };
-
   return (
-    <tr className="border-b bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-100/5 hover:dark:bg-blue-100/5">
-      <td className="py-4 px-6" onClick={session ? handleAddCoin : handleAlert}>
+    <tr className="border-b bg-white hover:bg-blue-100/5 dark:border-gray-700 dark:bg-gray-800 hover:dark:bg-blue-100/5">
+      <td
+        className="py-4 px-6"
+        onClick={savedCoin ? handleDeleteCoin : handleAddCoin}
+      >
         <FontAwesomeIcon
           icon={savedCoin ? faStar : outlineStar}
           className={savedCoin ? "text-yellow-500" : "text-gray-500"}
