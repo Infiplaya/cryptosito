@@ -4,6 +4,7 @@ import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
 import { CommunityPostCard } from "./CommunityPostCard";
 import { trpc } from "../../utils/trpc";
+import { CardSkeleton } from "../LoadingSkeletons/CardSkeleton";
 
 const Trending = () => {
   const { data: recentData } = trpc.recent.getRecent.useQuery();
@@ -30,13 +31,13 @@ const Trending = () => {
 
   return (
     <div className="container mx-auto mt-10 hidden gap-5 md:flex lg:h-48">
-      {coins && recentCoins && (
-        <>
-          <TrendingCard coins={coins} />
-          <RecentCard recentCoins={recentCoins} />
-          <CommunityPostCard />
-        </>
+      {coins ? <TrendingCard coins={coins} /> : <CardSkeleton />}
+      {recentCoins ? (
+        <RecentCard recentCoins={recentCoins} />
+      ) : (
+        <CardSkeleton />
       )}
+      <CommunityPostCard />
     </div>
   );
 };

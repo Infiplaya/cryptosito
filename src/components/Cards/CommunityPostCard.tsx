@@ -3,9 +3,15 @@ import { trpc } from "../../utils/trpc";
 import dayjs from "dayjs";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CardSkeleton } from "../LoadingSkeletons/CardSkeleton";
 
 export const CommunityPostCard = () => {
-  const { data: recentPost } = trpc.tweet.topPost.useQuery();
+  const { data: recentPost, isLoading } = trpc.tweet.topPost.useQuery();
+
+  if (isLoading) {
+    return <CardSkeleton />;
+  }
+
   return (
     <div className="flex-1 rounded-lg bg-white shadow-md dark:bg-gray-700 dark:shadow">
       <div>
