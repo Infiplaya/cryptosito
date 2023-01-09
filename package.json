@@ -29,6 +29,7 @@
     "@trpc/react-query": "^10.4.0",
     "@trpc/server": "^10.4.0",
     "chart.js": "^3.9.1",
+    "classnames": "^2.3.2",
     "dayjs": "1.11.6",
     "framer-motion": "^7.6.1",
     "keen-slider": "^6.8.3",

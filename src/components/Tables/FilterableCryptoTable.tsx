@@ -1,26 +1,28 @@
 import { FilterOptionsBar } from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
-import React, { useState } from "react";
-import Pagination from "../Pagination";
+import { useState, useMemo } from "react";
+import { Pagination } from "../Pagination";
 import { trpc } from "../../utils/trpc";
 import { TableSkeleton } from "../LoadingSkeletons/TableSkeleton";
 
-export const FilterableCryptoTable = function FilterableCryptoTable() {
+export const FilterableCryptoTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [coinsPerPage, setCoinsPerPage] = useState(50);
+  const [coinsPerPage, setCoinsPerPage] = useState(20);
   const [searchText, setSearchText] = useState("");
 
   const { data: cryptoData, isLoading } = trpc.cryptos.getCryptos.useQuery();
+
+  const currentData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * coinsPerPage;
+    const lastPageIndex = firstPageIndex + coinsPerPage;
+    return cryptoData?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, coinsPerPage, cryptoData]);
 
   const handleCoinsPerPageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     setCoinsPerPage(parseInt(event.target.value));
   };
-
-  const lastCoinIndex = currentPage * coinsPerPage;
-  const firstCoinIndex = lastCoinIndex - coinsPerPage;
-  const currentCoins = cryptoData?.slice(firstCoinIndex, lastCoinIndex);
 
   return (
     <div className="w-full items-center overflow-x-auto">
@@ -29,19 +31,21 @@ export const FilterableCryptoTable = function FilterableCryptoTable() {
         coinsPerPage={coinsPerPage}
         setSearchText={setSearchText}
       />
-      {currentCoins ?  (
-        <CryptoTable cryptoData={currentCoins} searchText={searchText} />
-      ) : <TableSkeleton />}
-      <div className="mt-5 flex w-full flex-col md:flex-row">
+      {currentData ? (
+        <CryptoTable cryptoData={currentData} searchText={searchText} />
+      ) : (
+        <TableSkeleton />
+      )}
+      <div className="mt-5 flex w-full flex-col p-3 md:flex-row">
         {cryptoData && (
           <Pagination
-            totalCoins={cryptoData.length}
-            coinsPerPage={coinsPerPage}
-            setCurrentPage={setCurrentPage}
             currentPage={currentPage}
+            totalCount={cryptoData.length}
+            pageSize={coinsPerPage}
+            onPageChange={(page) => setCurrentPage(page)}
           />
         )}
-        <div className="mt-5 ml-5 block gap-3 align-middle md:ml-10 md:flex">
+        <div className="mt-5 block gap-3 md:mt-0 md:flex md:items-center md:self-end">
           <label
             htmlFor="rows"
             className="block text-sm font-medium text-gray-900 dark:text-white"
