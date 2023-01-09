@@ -55,3 +55,6 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - add feature to edit and delete your posts - DONE
 - better loading state - DONE
 - remove from watchlist from table level - DONE
+- Play with SSG and SSR see if you can speed up website
+- Change components structure to modules
+

@@ -7,9 +7,53 @@ import { CoinDescription } from "../../../components/CoinDescription";
 import { CoinInfo } from "../../../components/CoinInfo";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
-const Coin: NextPage = () => {
-  const router = useRouter();
-  const id = router.query["id"];
+import { createProxySSGHelpers } from "@trpc/react-query/ssg";
+import {
+  GetStaticPaths,
+  GetStaticPropsContext,
+  InferGetStaticPropsType,
+} from "next";
+import superjson from "superjson";
+import { coinRouter } from "../../../server/trpc/router/cryptos";
+
+export async function getStaticProps(
+  context: GetStaticPropsContext<{ id: string }>
+) {
+  const ssg = await createProxySSGHelpers({
+    router: coinRouter,
+    ctx: {} as any,
+    transformer: superjson, // optional - adds superjson serialization
+  });
+  const id = context.params?.id as string;
+
+  await ssg.getCoin.prefetch({ name: id });
+  return {
+    props: {
+      trpcState: ssg.dehydrate(),
+      id,
+    },
+    revalidate: 3600,
+  };
+}
+export const getStaticPaths: GetStaticPaths = async () => {
+  const res = await fetch("https://api.coincap.io/v2/assets?limit=250");
+  const { data: cryptos } = await res.json();
+
+  return {
+    paths: cryptos.map((crypto: any) => ({
+      params: {
+        id: crypto.id,
+      },
+    })),
+    // https://nextjs.org/docs/basic-features/data-fetching#fallback-blocking
+    fallback: "blocking",
+  };
+};
+
+export default function CoinPage(
+  props: InferGetStaticPropsType<typeof getStaticProps>
+) {
+  const { id } = props;
   const { data: getCoin } = trpc.coin.getCoin.useQuery({ name: id });
 
   if (!getCoin)
@@ -18,7 +62,6 @@ const Coin: NextPage = () => {
         <Loader />
       </div>
     );
-
 
   return (
     <>
@@ -38,7 +81,8 @@ const Coin: NextPage = () => {
               <Sparklines data={getCoin.market_data.sparkline_7d.price}>
                 <SparklinesLine
                   color={
-                    getCoin.market_data.price_change_percentage_24h && getCoin.market_data.price_change_percentage_24h > 0
+                    getCoin.market_data.price_change_percentage_24h &&
+                    getCoin.market_data.price_change_percentage_24h > 0
                       ? "teal"
                       : "red"
                   }
@@ -54,6 +98,4 @@ const Coin: NextPage = () => {
       </main>
     </>
   );
-};
-
-export default Coin;
+}
