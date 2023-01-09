@@ -52,6 +52,6 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - reduce initial response time - kinda done
 - set initial state to icon stars to watchlist - DONE
 - add more filters
-- add feature to edit and delete your posts
+- add feature to edit and delete your posts - DONE
 - better loading state - DONE
 - remove from watchlist from table level - DONE
