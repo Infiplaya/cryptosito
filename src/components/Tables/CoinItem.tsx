@@ -37,6 +37,7 @@ export const CoinItem = ({
   isSaved: boolean | undefined;
 }) => {
   const [savedCoin, setSavedCoin] = useState(false);
+  const [isShowing, setIsShowing] = useState(false);
 
   const { data: session } = useSession();
 
@@ -119,7 +120,16 @@ export const CoinItem = ({
           icon={savedCoin ? faStar : outlineStar}
           className={savedCoin ? "text-yellow-500" : "text-gray-500"}
           cursor={`pointer`}
+          onMouseEnter={() => setIsShowing(true)}
+          onMouseLeave={() => setIsShowing(false)}
         />
+        {isShowing ? (
+          <p className="absolute rounded-lg bg-gray-800 p-2 text-xs dark:text-gray-50 font-semibold mt-5 shadow-sm dark:shadow-white/50">
+            {savedCoin
+              ? "Remove coin from the watchlist"
+              : "Save coin to the watchlist"}
+          </p>
+        ) : null}
       </td>
       <td className="py-4 px-6">{coin.market_cap_rank}</td>
       <td className="py-4 px-6">
