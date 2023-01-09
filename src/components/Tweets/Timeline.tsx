@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { trpc, RouterInputs, RouterOutputs } from "../../utils/trpc";
-import { CreateTweet } from "./CreateTweet";
+import { CreateTweet, tweetSchema } from "./CreateTweet";
 import { useState, useEffect, use } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -130,8 +130,34 @@ function Tweet({
   client: QueryClient;
   input: RouterInputs["tweet"]["timeline"];
 }) {
-  const { data: session } = useSession();
+  const [isEditing, setIsEditing] = useState(false);
+  const [text, setText] = useState(tweet.text);
+  const [error, setError] = useState("");
+
   const utils = trpc.useContext();
+
+  const { mutateAsync } = trpc.tweet.editTweet.useMutation({
+    onSuccess: () => {
+      setText("");
+      utils.tweet.timeline.invalidate();
+    },
+  });
+
+  async function handleEditPost() {
+    try {
+      await tweetSchema.parse({ text });
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+      return;
+    }
+
+    mutateAsync({ tweetId: tweet.id, tweetSchema: {text: text} });
+    setIsEditing(prev => !prev)
+  }
+
+  const { data: session } = useSession();
 
   const likeMutation = trpc.tweet.like.useMutation({
     onSuccess: (data, variables) => {
@@ -164,6 +190,7 @@ function Tweet({
     });
   };
 
+
   const hasLiked = tweet.likes.length > 0;
 
   return (
@@ -187,7 +214,15 @@ function Tweet({
             </p>
           </div>
 
-          <p className="whitespace-pre-line">{tweet.text}</p>
+          {isEditing ? (
+            <textarea
+              className="mt-5 w-full resize-none rounded-lg bg-gray-50 p-4 shadow dark:bg-gray-700"
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+            />
+          ) : (
+            <p className="whitespace-pre-line">{tweet.text}</p>
+          )}
         </div>
       </div>
 
@@ -212,12 +247,29 @@ function Tweet({
         <span className="text-sm text-gray-500">{tweet._count.likes}</span>
       </div>
       {tweet.authorId === session?.user?.id && (
-        <button
-          className="rounded-lg bg-gray-300 px-3 py-1 dark:bg-gray-700"
-          onClick={handleDeleteTweet}
-        >
-          Delete
-        </button>
+        <div className="flex gap-3 text-xs font-medium">
+          <button
+            className="rounded-lg bg-gray-300 px-3 py-1 dark:bg-gray-700"
+            onClick={handleDeleteTweet}
+          >
+            Delete
+          </button>
+          {!isEditing ? (
+            <button
+              className="rounded-lg bg-gray-300 px-3 py-1 dark:bg-gray-700"
+              onClick={() => setIsEditing((prev) => !prev)}
+            >
+              Edit
+            </button>
+          ) : (
+            <button
+              className="rounded-lg bg-gray-300 px-3 py-1 dark:bg-gray-700"
+              onClick={handleEditPost}
+            >
+              Save
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

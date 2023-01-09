@@ -174,7 +174,7 @@ export const tweetRouter = router({
     tweetId: z.string(),
   }))
   .mutation(async ({ctx, input}) => {
-    const {prisma} = ctx;
+    const { prisma } = ctx;
     // first delete all the likes from the tweet
     const deleteLikes = prisma.like.deleteMany({
       where: {
@@ -193,4 +193,23 @@ export const tweetRouter = router({
 
     return transaction
   }),
+
+  editTweet: protectedProcedure
+  .input(z.object({
+    tweetId: z.string(),
+    tweetSchema
+  }))
+  .mutation(async ({ctx, input}) => {
+    const { prisma } = ctx;
+    const { text } = input.tweetSchema;
+
+    return prisma.tweet.update({
+      where: {
+        id: input.tweetId
+      },
+      data: {
+        text
+      }
+    })
+  })
 });
