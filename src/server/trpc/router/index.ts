@@ -1,10 +1,12 @@
 // src/server/trpc/router/index.ts
 import { router } from "../trpc";
-import { buyRouter, chartRouter, coinRouter, cryptosRouter, recentRouter, trendingRouter, watchlistRouter } from "./cryptos";
+import { chartRouter, coinRouter, cryptosRouter, recentRouter, trendingRouter,   } from "./cryptos";
+import { buyRouter } from "./buy-coin";
 import { authRouter } from "./auth";
 import { globalRouter } from "./cryptos";
 import { inferRouterOutputs } from "@trpc/server";
 import { tweetRouter } from "./tweet";
+import { watchlistRouter } from "./watchlist";
 
 export const appRouter = router({
   auth: authRouter,

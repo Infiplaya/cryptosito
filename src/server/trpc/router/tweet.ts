@@ -20,19 +20,6 @@ export const tweetRouter = router({
       },
     });
   }),
-
-  delete: protectedProcedure
-  .input(z.object({
-    id: z.string(),
-  }))
-  .mutation(async ({ctx, input}) => {
-    await ctx.prisma.tweet.delete({
-      where: {
-        id: input.id,
-      }
-    })
-  }),
-
   timeline: publicProcedure
     .input(
       z.object({
@@ -181,4 +168,29 @@ export const tweetRouter = router({
         },
       });
     }),
+    
+  deleteTweet: protectedProcedure
+  .input(z.object({
+    tweetId: z.string(),
+  }))
+  .mutation(async ({ctx, input}) => {
+    const {prisma} = ctx;
+    // first delete all the likes from the tweet
+    const deleteLikes = prisma.like.deleteMany({
+      where: {
+        tweetId: input.tweetId
+      }
+    })
+
+    // then delete the tweet
+    const deleteTweet = prisma.tweet.delete({
+      where: {
+        id: input.tweetId
+      }
+    })
+
+    const transaction = await prisma.$transaction([deleteLikes, deleteTweet])
+
+    return transaction
+  }),
 });

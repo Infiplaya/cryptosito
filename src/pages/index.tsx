@@ -9,6 +9,8 @@ import { Highlights } from "../components/Highlights";
 
 const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
+
+
   return (
     <>
       <Head>

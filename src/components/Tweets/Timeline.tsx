@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { trpc, RouterInputs, RouterOutputs } from "../../utils/trpc";
 import { CreateTweet } from "./CreateTweet";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";
@@ -12,6 +12,7 @@ import {
   QueryClient,
   useQueryClient,
 } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
 const LIMIT = 10;
 
@@ -76,7 +77,7 @@ function updateCache({
   data: {
     userId: string;
   };
-  action: "like" | "unlike";
+  action: "like" | "unlike" | "delete";
   input: RouterInputs["tweet"]["timeline"];
 }) {
   client.setQueryData(
@@ -129,6 +130,9 @@ function Tweet({
   client: QueryClient;
   input: RouterInputs["tweet"]["timeline"];
 }) {
+  const { data: session } = useSession();
+  const utils = trpc.useContext();
+
   const likeMutation = trpc.tweet.like.useMutation({
     onSuccess: (data, variables) => {
       updateCache({ client, data, variables, input, action: "like" });
@@ -140,7 +144,25 @@ function Tweet({
     },
   }).mutateAsync;
 
-  const deleteMutation = trpc.tweet.delete.useMutation();
+  const deleteTweet = trpc.tweet.deleteTweet.useMutation({
+    onMutate: () => {
+      utils.tweet.timeline.cancel();
+      const optimisticUpdate = utils.tweet.timeline.getData();
+
+      if (optimisticUpdate) {
+        utils.tweet.timeline.setData(undefined!, optimisticUpdate);
+      }
+    },
+    onSettled: () => {
+      utils.tweet.timeline.invalidate();
+    },
+  });
+
+  const handleDeleteTweet = async () => {
+    deleteTweet.mutate({
+      tweetId: tweet.id,
+    });
+  };
 
   const hasLiked = tweet.likes.length > 0;
 
@@ -153,7 +175,7 @@ function Tweet({
             alt={`${tweet.author.name} profile`}
             width={48}
             height={48}
-            className="rounded-full w-10 h-10"
+            className="h-10 w-10 rounded-full"
           ></Image>
         ) : null}
         <div className="ml-2">
@@ -169,7 +191,7 @@ function Tweet({
         </div>
       </div>
 
-      <div className="item-center mt-4 flex gap-1 p-2">
+      <div className="item-center flex gap-3 p-2">
         <FontAwesomeIcon
           icon={faHeart}
           className="cursor-pointer"
@@ -187,9 +209,16 @@ function Tweet({
             });
           }}
         />
-
         <span className="text-sm text-gray-500">{tweet._count.likes}</span>
       </div>
+      {tweet.authorId === session?.user?.id && (
+        <button
+          className="rounded-lg bg-gray-300 px-3 py-1 dark:bg-gray-700"
+          onClick={handleDeleteTweet}
+        >
+          Delete
+        </button>
+      )}
     </div>
   );
 }
