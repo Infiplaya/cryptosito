@@ -189,10 +189,10 @@ export const CoinItem = ({
           : "Null"}
         %
       </td>
-      <td className="hidden py-4 px-6 md:table-cell">
+      <td className="py-4 px-6">
         ${coin.total_volume.toLocaleString()}
       </td>
-      <td className="hidden py-4 px-6 md:table-cell">
+      <td className="py-4 px-6">
         ${coin.market_cap.toLocaleString()}
       </td>
       <td className="hidden w-52 py-4 px-6 md:table-cell">

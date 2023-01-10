@@ -2,6 +2,8 @@ import { useState, useCallback } from "react";
 import { CryptoData } from "../../server/trpc/router/cryptos";
 import { trpc } from "../../utils/trpc";
 import { CoinItem } from "./CoinItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 
 type Data = CryptoData;
 
@@ -43,8 +45,12 @@ function SortButton({
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }) {
   return (
-    <button onClick={onClick}>
-      {sortKey === columnKey && sortOrder === "desc" ? "▼" : "▲"}
+    <button onClick={onClick} className="ml-3 hidden md:table-cell">
+      {sortKey === columnKey && sortOrder === "desc" ? (
+        <FontAwesomeIcon icon={faSortDown} size="lg" />
+      ) : (
+        <FontAwesomeIcon icon={faSortUp} size="lg" />
+      )}
     </button>
   );
 }
@@ -63,13 +69,6 @@ export function CryptoTable({
 
   const coinsNames = watchlistData?.map((coin: any) => coin.name);
 
-  function hideRows(key: string) {
-    if (key === "total_volume" || key === "market_cap") {
-      return "hidden md:table-cell";
-    } else {
-      return;
-    }
-  }
 
   const headers: { key: SortKeys; label: string }[] = [
     { key: "market_cap_rank", label: "#" },
@@ -107,9 +106,9 @@ export function CryptoTable({
               <th className="py-3 px-6"></th>
               {headers.map((row) => {
                 return (
-                  <td
+                  <th
                     key={row.key}
-                    className={`${hideRows(row.key)} py-3 px-6`}
+                    className="py-3 px-6"
                   >
                     {row.label}{" "}
                     <SortButton
@@ -120,7 +119,7 @@ export function CryptoTable({
                         sortKey,
                       }}
                     />
-                  </td>
+                  </th>
                 );
               })}
               <th className="hidden py-3 px-6 md:table-cell">7D</th>
