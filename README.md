@@ -56,6 +56,7 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - better loading state - DONE
 - remove from watchlist from table level - DONE
 - Play with SSG and SSR see if you can speed up website - coin pages changed to ISR
-- Change components structure to modules
+- Change components structure to modules - done
 - make pagination look better - done
+- add more api endpoints and more pages 
 
