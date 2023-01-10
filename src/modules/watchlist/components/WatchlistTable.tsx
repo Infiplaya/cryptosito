@@ -1,4 +1,4 @@
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 
 export const WatchList: React.FC = () => {
   const { data: coins, isLoading } = trpc.watchlist.getAll.useQuery();

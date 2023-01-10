@@ -57,5 +57,5 @@ Feel free to tell me what can I add or improve! I am still learning web developm
 - remove from watchlist from table level - DONE
 - Play with SSG and SSR see if you can speed up website - coin pages changed to ISR
 - Change components structure to modules
-- make pagination look better
+- make pagination look better - done
 

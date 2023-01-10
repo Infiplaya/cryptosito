@@ -1,9 +1,9 @@
 import { FilterOptionsBar } from "./FilterOptionsBar";
 import { CryptoTable } from "./CryptoTable";
 import { useState, useMemo } from "react";
-import { Pagination } from "../Pagination";
-import { trpc } from "../../utils/trpc";
-import { TableSkeleton } from "../LoadingSkeletons/TableSkeleton";
+import { Pagination } from "./Pagination";
+import { trpc } from "../../../utils/trpc";
+import { TableSkeleton } from "./TableSkeleton";
 
 export const FilterableCryptoTable = () => {
   const [currentPage, setCurrentPage] = useState(1);

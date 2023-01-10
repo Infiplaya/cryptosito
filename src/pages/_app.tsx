@@ -7,8 +7,8 @@ import { trpc } from "../utils/trpc";
 import { ThemeProvider } from "next-themes";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // import Font Awesome CSS
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { Footer } from "../components/Footer";
-import Header from "../components/Header/Header";
+import { Footer } from "../modules/common/components/Footer";
+import Header from "../modules/common/components/Header";
 import { Inter } from "@next/font/google";
 
 config.autoAddCss = false;

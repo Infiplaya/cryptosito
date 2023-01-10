@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { trpc, RouterInputs, RouterOutputs } from "../../utils/trpc";
+import { trpc, RouterInputs, RouterOutputs } from "../../../utils/trpc";
 import { CreateTweet, tweetSchema } from "./CreateTweet";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocal from "dayjs/plugin/updateLocale";

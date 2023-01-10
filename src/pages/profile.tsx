@@ -2,8 +2,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import watchlistImg from "../../public/watchlist.jpeg";
-import { Timeline } from "../components/Tweets/Timeline";
+import { Timeline } from "../modules/common/components/Timeline";
 
 const Profile = () => {
   const router = useRouter();

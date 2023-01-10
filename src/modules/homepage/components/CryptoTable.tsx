@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import { CryptoData } from "../../server/trpc/router/cryptos";
-import { trpc } from "../../utils/trpc";
+import { CryptoData } from "../../../server/trpc/router/cryptos";
+import { trpc } from "../../../utils/trpc";
 import { CoinItem } from "./CoinItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GrayButton } from "../Buttons/GrayButton";
+import { GrayButton } from "../../common/components/GrayButton";
 
 interface Props {
   handleCoinsPerPageChange: (

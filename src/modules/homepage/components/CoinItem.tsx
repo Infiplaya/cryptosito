@@ -3,10 +3,9 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as outlineStar } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { z } from "zod";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Sparklines, SparklinesLine } from "react-sparklines";
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 import { useSession } from "next-auth/react";
 
 const coinSchema = z.object({

@@ -2,9 +2,9 @@ import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { RouterOutput } from "../server/trpc/router";
-import { trpc } from "../utils/trpc";
-import Loader from "./Loader";
+import { RouterOutput } from "../../../server/trpc/router";
+import { trpc } from "../../../utils/trpc";
+import Loader from "../../common/components/Loader";
 type GetCoinOutput = RouterOutput["coin"]["getCoin"];
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -159,7 +159,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
       <div>
         {session ? (
           <>
-            <h1 className="text-3xl font-bold mt-10 md:mt-0">Buy a coin</h1>
+            <h1 className="mt-10 text-3xl font-bold md:mt-0">Buy a coin</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="mt-3">
               <input
                 className="mt-1 rounded-lg p-3"
@@ -179,7 +179,9 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
                 Estimated Cost:{" "}
                 {value != ""
                   ? getCoin.market_data?.current_price &&
-                    (parseFloat(value) * getCoin.market_data?.current_price.usd).toFixed(2)
+                    (
+                      parseFloat(value) * getCoin.market_data?.current_price.usd
+                    ).toFixed(2)
                   : ""}
                 $
               </p>
@@ -196,7 +198,7 @@ export const CoinInfo: React.FC<{ getCoin: GetCoinOutput }> = ({ getCoin }) => {
         )}
       </div>
       <div>
-        <p className="text-3xl mt-10 md:mt-0 font-bold text-gray-700 dark:text-gray-300">
+        <p className="mt-10 text-3xl font-bold text-gray-700 dark:text-gray-300 md:mt-0">
           {getCoin.name} Price ({getCoin.symbol.toUpperCase()})
         </p>
         <div className="flex items-center gap-3 align-middle">

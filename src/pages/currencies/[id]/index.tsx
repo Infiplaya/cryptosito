@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { trpc } from "../../../utils/trpc";
 import { useRouter } from "next/router";
-import Loader from "../../../components/Loader";
-import { CoinDescription } from "../../../components/CoinDescription";
+import Loader from "../../../modules/common/components/Header/Loader";
+import { CoinDescription } from "../../../modules/currencies/components/CoinDescription";
 import { CoinInfo } from "../../../components/CoinInfo";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 

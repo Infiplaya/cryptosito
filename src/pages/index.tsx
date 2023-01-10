@@ -1,15 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { FilterableCryptoTable } from "../components/Tables/FilterableCryptoTable";
-import TodayCrypto from "../components/TodayCrypto";
-import Trending from "../components/Cards/Trending";
-import { GradientBg } from "../components/GradientBg";
-import { Highlights } from "../components/Highlights";
+import { FilterableCryptoTable } from "../modules/homepage/components/FilterableCryptoTable";
+import TodayCrypto from "../modules/homepage/components/TodayCrypto";
+import Trending from "../modules/homepage/components/Trending";
+import { GradientBg } from "../modules/homepage/components/GradientBg";
+import { Highlights } from "../modules/homepage/components/Highlights";
 
 const Home: NextPage = () => {
   const [enabled, setEnabled] = useState(true);
-
 
   return (
     <>

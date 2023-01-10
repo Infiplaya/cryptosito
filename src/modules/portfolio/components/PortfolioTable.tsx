@@ -1,12 +1,11 @@
-import { trpc } from "../../utils/trpc";
+import { trpc } from "../../../utils/trpc";
 
 export const PortfolioTable = () => {
   const { data: boughtCoins, isLoading } = trpc.buyCoin.getAll.useQuery();
-  
+
   if (isLoading) {
     return <div>Loading data...</div>;
   }
-
 
   return (
     <div className="overflow-x-auto text-gray-800 dark:text-gray-300">

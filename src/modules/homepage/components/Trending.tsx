@@ -3,8 +3,8 @@ import Image from "next/image";
 import { TrendingCard } from "./TrendingCard";
 import { RecentCard } from "./RecentCard";
 import { CommunityPostCard } from "./CommunityPostCard";
-import { trpc } from "../../utils/trpc";
-import { CardSkeleton } from "../LoadingSkeletons/CardSkeleton";
+import { trpc } from "../../../utils/trpc";
+import { CardSkeleton } from "./CardSkeleton";
 
 const Trending = () => {
   const { data: recentData } = trpc.recent.getRecent.useQuery();

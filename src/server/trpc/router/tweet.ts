@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { tweetSchema } from "../../../components/Tweets/CreateTweet";
+import { tweetSchema } from "../../../modules/common/components/CreateTweet";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 
 export const tweetRouter = router({

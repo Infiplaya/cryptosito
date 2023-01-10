@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { PortfolioTable } from "../components/Tables/PortfolioTable";
+import { PortfolioTable } from "../modules/portfolio/components/PortfolioTable";
 
 const Portfolio = () => {
   const router = useRouter();
