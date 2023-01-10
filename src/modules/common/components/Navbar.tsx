@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../../public/logo.png"
+import logo from "../../../../public/logo.png";
 import { useSession, signIn } from "next-auth/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
@@ -21,6 +21,13 @@ export const Navbar = () => {
             className={`h-auto w-52 dark:invert`}
             role={`button`}
           ></Image>
+        </Link>
+      </li>
+      <li className="hidden md:block">
+        <Link href="/">
+          <button className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">
+            Cryptocurrencies
+          </button>
         </Link>
       </li>
       <li className="ml-auto hidden md:block">

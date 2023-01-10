@@ -1,10 +1,9 @@
-import type { NextPage } from "next";
+
 import Head from "next/head";
 import { trpc } from "../../../utils/trpc";
-import { useRouter } from "next/router";
-import Loader from "../../../modules/common/components/Header/Loader";
+import Loader from "../../../modules/common/components/Loader";
 import { CoinDescription } from "../../../modules/currencies/components/CoinDescription";
-import { CoinInfo } from "../../../components/CoinInfo";
+import { CoinInfo } from "../../../modules/currencies/components/CoinInfo";
 import { Sparklines, SparklinesLine } from "react-sparklines";
 
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";

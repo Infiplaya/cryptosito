@@ -2,7 +2,7 @@ import { type NextPage } from "next";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-import { Timeline } from "../../components/Tweets/Timeline";
+import { Timeline } from "../../modules/common/components/Timeline";
 
 const Community: NextPage = () => {
   const router = useRouter();

@@ -10,6 +10,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import { Footer } from "../modules/common/components/Footer";
 import Header from "../modules/common/components/Header";
 import { Inter } from "@next/font/google";
+import { Container } from "../modules/common/components/Container";
 
 config.autoAddCss = false;
 
@@ -25,9 +26,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <SessionProvider session={session}>
       <ThemeProvider attribute="class">
         <main className={inter.className}>
-          <Header />
-          <Component {...pageProps} />
-          <Footer />
+          <Container>
+            <Header />
+            <Component {...pageProps} />
+            <Footer />
+          </Container>
         </main>
       </ThemeProvider>
     </SessionProvider>
