@@ -30,6 +30,13 @@ export const Navbar = () => {
           </button>
         </Link>
       </li>
+      <li className="hidden md:block">
+        <Link href="/exchanges">
+          <button className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">
+            Exchanges
+          </button>
+        </Link>
+      </li>
       <li className="ml-auto hidden md:block">
         <Link href="/watchlist">
           <button className="rounded-lg px-3 py-2 text-sm font-normal text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-800">
