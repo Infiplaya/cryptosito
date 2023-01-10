@@ -1,11 +1,10 @@
 import { useState, useCallback } from "react";
-import { CryptoData } from "../../../server/trpc/router/cryptos";
-import { trpc } from "../../../utils/trpc";
-import { CoinItem } from "./CoinItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { ExchangesData } from "../../../server/trpc/router/exchanges";
+import { ExchangeItem } from "./ExchangeItem";
 
-type Data = CryptoData;
+type Data = ExchangesData;
 
 type SortKeys = keyof Data[0];
 
@@ -55,40 +54,27 @@ function SortButton({
   );
 }
 
-export function CryptoTable({
-  cryptoData,
-  searchText,
-}: {
-  cryptoData: CryptoData;
-  searchText: string;
-}): JSX.Element {
-  const [sortKey, setSortKey] = useState<SortKeys>("market_cap_rank");
+export const ExchangesTable: React.FC<{ exchangesData: ExchangesData }> = ({
+  exchangesData,
+}) => {
+  const [sortKey, setSortKey] = useState<SortKeys>("rank");
   const [sortOrder, setSortOrder] = useState<SortOrder>("ascn");
 
-  const { data: watchlistData } = trpc.watchlist.getAll.useQuery();
-
-  const coinsNames = watchlistData?.map((coin) => coin.name);
-
-
   const headers: { key: SortKeys; label: string }[] = [
-    { key: "market_cap_rank", label: "#" },
-    { key: "name", label: "Coin" },
-    { key: "current_price", label: "Price" },
-    { key: "price_change_percentage_1h_in_currency", label: "1h %" },
-    { key: "price_change_percentage_24h", label: "24h %" },
-    { key: "price_change_percentage_7d_in_currency", label: "7d %" },
-    { key: "total_volume", label: "Volume 24h" },
-    { key: "market_cap", label: "Market Cap" },
+    { key: "rank", label: "#" },
+    { key: "name", label: "Exchange" },
+    { key: "percentTotalVolume", label: "Volume %" },
+    { key: "volumeUsd", label: "Volume" },
   ];
 
-  const sortedCoins = useCallback(
+  const sortedExchanges = useCallback(
     () =>
       sortData({
-        tableData: cryptoData,
+        tableData: exchangesData,
         sortKey,
         reverse: sortOrder === "desc",
       }),
-    [cryptoData, sortKey, sortOrder]
+    [exchangesData, sortKey, sortOrder]
   );
 
   function changeSort(key: SortKeys) {
@@ -103,13 +89,9 @@ export function CryptoTable({
         <table className="w-full text-left text-sm font-semibold text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="py-3 px-6"></th>
               {headers.map((row) => {
                 return (
-                  <th
-                    key={row.key}
-                    className="py-3 px-6"
-                  >
+                  <th key={row.key} className="py-3 px-6">
                     {row.label}{" "}
                     <SortButton
                       columnKey={row.key}
@@ -122,30 +104,15 @@ export function CryptoTable({
                   </th>
                 );
               })}
-              <th className="hidden py-3 px-6 md:table-cell">7D</th>
             </tr>
           </thead>
           <tbody>
-            {sortedCoins()
-              .filter((val) => {
-                if (searchText === "") {
-                  return val;
-                } else if (
-                  val.name.toLowerCase().includes(searchText.toLowerCase())
-                ) {
-                  return val;
-                }
-              })
-              .map((coin) => (
-                <CoinItem
-                  coin={coin}
-                  key={coin.id}
-                  isSaved={coinsNames?.includes(coin.name)}
-                />
-              ))}
+            {sortedExchanges().map((exchange) => (
+              <ExchangeItem exchange={exchange} key={exchange.exchangeId} />
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
-}
+};

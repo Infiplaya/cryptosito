@@ -1,9 +1,14 @@
-import React from "react";
+import { ExchangesTable } from "../../modules/exchanges/components/ExchangesTable";
+import { trpc } from "../../utils/trpc";
 
 const index = () => {
+  const { data: exchangesData } = trpc.exchanges.getExchanges.useQuery();
   return (
-    <main className="mx-auto flex flex-col items-center justify-center p-4 align-middle lg:container lg:px-16">
-      <div>Working in progress</div>
+    <main className="mx-auto p-4 align-middle lg:container lg:px-16">
+      <>
+        <h1 className="text-3xl font-bold">Top cryptocurrency exchanges</h1>
+        {exchangesData && <ExchangesTable exchangesData={exchangesData} />}
+      </>
     </main>
   );
 };

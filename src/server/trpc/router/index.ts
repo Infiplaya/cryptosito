@@ -7,6 +7,7 @@ import { globalRouter } from "./cryptos";
 import { inferRouterOutputs } from "@trpc/server";
 import { tweetRouter } from "./tweet";
 import { watchlistRouter } from "./watchlist";
+import { exchangesRouter } from "./exchanges";
 
 export const appRouter = router({
   auth: authRouter,
@@ -19,6 +20,7 @@ export const appRouter = router({
   marketChart: chartRouter,
   buyCoin: buyRouter,
   tweet: tweetRouter,
+  exchanges: exchangesRouter
 });
 
 // export type definition of API
