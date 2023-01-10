@@ -2,8 +2,8 @@ interface Exchange {
   exchangeId: string;
   name: string;
   rank: number;
-  percentTotalVolume: string | null;
-  volumeUsd: string | null;
+  percentTotalVolume?: number | null;
+  volumeUsd?: number | null;
   tradingPairs: string;
   socket: boolean | null;
   exchangeUrl: string;
@@ -16,14 +16,12 @@ export const ExchangeItem = ({ exchange }: { exchange: Exchange }) => {
       <td className="py-4 px-6">{exchange.rank}</td>
       <td className="py-4 px-6">{exchange.name}</td>
       <td className="py-4 px-6">
-        {typeof exchange.percentTotalVolume === "string"
-          ? `${parseFloat(exchange.percentTotalVolume).toFixed(2)}%`
+        {exchange.percentTotalVolume
+          ? `${exchange.percentTotalVolume.toFixed(2)} $`
           : "null"}
       </td>
       <td className="py-4 px-6">
-        {typeof exchange.volumeUsd === "string"
-          ? `${parseFloat(exchange.volumeUsd).toFixed(2)} $`
-          : "null"}
+        {exchange.volumeUsd ? `${exchange.volumeUsd.toFixed(2)} $` : "null"}
       </td>
     </tr>
   );

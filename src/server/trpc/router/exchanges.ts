@@ -5,8 +5,8 @@ const exchangesResult = z.array(z.object({
     exchangeId: z.string(),
     name: z.string(),
     rank: z.number(),
-    percentTotalVolume: z.string().nullable(),
-    volumeUsd: z.string().nullable(),
+    percentTotalVolume: z.number().nullable(),
+    volumeUsd: z.number().nullish(),
     tradingPairs: z.string(),
     socket: z.boolean().nullable(),
     exchangeUrl: z.string(),
@@ -23,8 +23,12 @@ export const exchangesRouter = router({
 
         const fixedData = exchanges.map((exchange:any) => exchange = {
             ...exchange,
-            rank: parseInt(exchange.rank) 
+            rank: parseInt(exchange.rank),
+            volumeUsd: exchange.volumeUsd === null ? null : parseFloat(exchange.volumeUsd),
+            percentTotalVolume: exchange.percentTotalVolume === null ? null : parseFloat(exchange.percentTotalVolume)
         })
+
+        console.log(fixedData)
 
         return exchangesResult.parse(fixedData)
       }),
